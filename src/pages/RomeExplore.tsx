@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { MapPin, Compass, Book, Trophy, User, Camera, Brain } from 'lucide-react';
 import QuizPage from './QuizPage';
 import DiscoveryScanner from './DiscoveryScanner';
@@ -28,6 +28,65 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
   const [landmarkToShow, setLandmarkToShow] = useState<Landmark | null>(null);
   const [showMuseum, setShowMuseum] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(false);
+  const [selectedYear, setSelectedYear] = useState<number>(2000);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  // drag state
+  const draggingRef = useRef(false);
+
+  const minYear = -2000;
+  const maxYear = 2000;
+
+  const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+
+  const valueToPct = (value: number) => {
+    return (value - minYear) / (maxYear - minYear);
+  }
+
+  const pctToValue = (pct: number) => {
+    const raw = minYear + pct * (maxYear - minYear);
+    // snap to nearest 100
+    return Math.round(raw / 100) * 100;
+  }
+
+  // pointer handling
+  const startDrag = (ev: PointerEvent | any) => {
+    ev.preventDefault();
+    (ev.target as Element).setPointerCapture?.(ev.pointerId);
+    draggingRef.current = true;
+    handlePointerMove(ev);
+    window.addEventListener('pointermove', handlePointerMove as any);
+    window.addEventListener('pointerup', stopDrag as any);
+  }
+
+  const handlePointerMove = (ev: PointerEvent | any) => {
+    if (!draggingRef.current) return;
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const y = ev.clientY;
+    const relative = clamp((y - rect.top) / rect.height, 0, 1);
+    const val = pctToValue(relative);
+    setSelectedYear(val);
+  }
+
+  const stopDrag = () => {
+    draggingRef.current = false;
+    window.removeEventListener('pointermove', handlePointerMove as any);
+    window.removeEventListener('pointerup', stopDrag as any);
+  }
+
+  const jumpToYear = (year: number) => {
+    setSelectedYear(year);
+  }
+
+  const handleKeyDown = (e: any) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      setSelectedYear(s => clamp(Math.round((s - 100) / 100) * 100, minYear, maxYear));
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      setSelectedYear(s => clamp(Math.round((s + 100) / 100) * 100, minYear, maxYear));
+    }
+  }
 
   // Landmark data for Rome
   const [landmarks, setLandmarks] = useState([
@@ -66,9 +125,19 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
 
   return (
     <div className="h-screen w-full bg-amber-50 flex flex-col relative overflow-hidden">
-      {/* Rome map background */}
+      {/* Rome map background (switches between modern and historic based on selectedYear) */}
       <div className="absolute inset-0">
-        <img src={'/src/assets/rome_historic.png'} alt="Rome Map" className="object-cover w-full h-full opacity-50" />
+        {/* choose historic map around 100 AD if selected close to 100, otherwise modern */}
+        {(() => {
+          const isHistoric100 = Math.abs(selectedYear - 100) <= 50; // within +/-50 years
+          const modernSrc = '/src/assets/rome_modern.png';
+          const historicSrc = '/src/assets/rome_historic.png';
+          // If historic asset missing, browser will naturally show broken image; user should add the file to the path.
+          const src = isHistoric100 ? historicSrc : modernSrc;
+          return (
+            <img src={src} alt="Rome Map" className="object-cover w-full h-full opacity-50" />
+          );
+        })()}
       </div>
 
       {/* Watercolor texture overlay */}
@@ -81,7 +150,7 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
       </div>
 
       {/* Top Bar */}
-      <div className="relative z-20 bg-gradient-to-b from-amber-100 to-amber-50 px-4 py-3 shadow-sm border-b-2 border-amber-200">
+          <div className="relative z-20 bg-gradient-to-b from-amber-100 to-amber-50 px-4 py-3 shadow-sm border-b-2 border-amber-200">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {onNavigateToTrondheim && (
@@ -286,6 +355,103 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
       >
         <Camera className="w-8 h-8 text-white" />
       </button>
+
+      {/* Timeline toggle button placed vertically above the camera button */}
+      <button
+        onClick={() => setShowTimeline(v => !v)}
+        aria-label="Open timeline"
+        title="Open timeline"
+        className="absolute bottom-40 right-6 w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center z-40 hover:scale-110 transition-transform"
+      >
+        {/* simple clock / timeline icon - use a small div + svg fallback */}
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-700">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 6v6l4 2"></path>
+        </svg>
+      </button>
+
+      {/* Timeline slider panel (appears when showTimeline=true) */}
+      {showTimeline && (
+        <div className="absolute bottom-28 right-20 z-50">
+          {/* background panel that covers the map while slider is visible */}
+          <div className="bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-amber-200 flex items-center gap-4 w-44 overflow-visible">
+            {/* (removed left label column) - the interactive timeline is centered in the slider container below */}
+
+            {/* slider container - custom interactive timeline built from the line + points */}
+            <div className="relative h-64 w-20 flex items-center">
+              {/* interactive container */}
+              <div
+                ref={(el: HTMLDivElement | null) => { containerRef.current = el }}
+                className="relative h-64 w-10 flex items-center cursor-pointer"
+                onPointerDown={(e) => startDrag(e as any)}
+              >
+                {/* transparent accessible range (kept for keyboard users but hidden visually) */}
+                <input
+                  type="range"
+                  min={-2000}
+                  max={2000}
+                  step={100}
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(parseInt(e.target.value, 10))}
+                  className="sr-only"
+                  aria-label="Select year on timeline"
+                />
+
+                {/* continuous vertical line centered */}
+                <div className="absolute left-1/2 top-2 bottom-2 w-1 bg-blue-600 rounded -translate-x-1/2" />
+
+                {/* points positioned along the centered line (no left label column) */}
+                {Array.from({ length: 9 }).map((_, i) => {
+                  const year = -2000 + i * 500;
+                  const pct = (year - (-2000)) / 4000; // 0..1
+                  return (
+                    <div
+                      key={year}
+                      onClick={(ev) => { ev.stopPropagation(); jumpToYear(year); }}
+                      className="absolute"
+                      style={{ left: '50%', top: `${pct * 100}%`, transform: 'translate(-50%, -50%)' }}
+                    >
+                      <div className="relative w-0">
+                        {/* dot centered on the blue line */}
+                        <div className="absolute left-0 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-amber-600 z-10" />
+                        {/* label to the right of the line */}
+                        <div className="absolute left-6 top-1/2 transform -translate-y-1/2 text-xs text-amber-800 select-none whitespace-nowrap">
+                          {year < 0 ? `${Math.abs(year)} BC` : `${year} AD`}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* draggable thumb */}
+                <div
+                  role="slider"
+                  aria-valuemin={-2000}
+                  aria-valuemax={2000}
+                  aria-valuenow={selectedYear}
+                  tabIndex={0}
+                  onKeyDown={(e) => handleKeyDown(e)}
+                  className="absolute left-1/2 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center z-20 -translate-x-1/2"
+                  style={{ top: `${valueToPct(selectedYear) * 100}%`, transform: 'translate(-50%, -50%)' }}
+                  onPointerDown={(ev) => startDrag(ev as any)}
+                >
+                  <div className="w-3 h-3 bg-blue-600 rounded-full" />
+                </div>
+              </div>
+
+              {/* current year indicator: positioned to the right of the labels, aligned to the selected tick */}
+              <div
+                className="absolute z-30 text-xs text-amber-900 font-semibold select-none"
+                style={{ left: 'calc(50% + 6rem)', top: `${valueToPct(selectedYear) * 100}%`, transform: 'translate(-50%, -50%)' }}
+              >
+                {selectedYear < 0 ? `${Math.abs(selectedYear)} BC` : `${selectedYear} AD`}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      // -- helper refs and functions injected below --
 
       {/* Discovery Scanner Modal */}
       {showScanner && landmarkToScan && (
