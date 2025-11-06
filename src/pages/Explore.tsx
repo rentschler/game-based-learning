@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { MapPin, Compass, Book, Trophy, User, Camera, Brain } from 'lucide-react';
 import CologneExplore from './CologneExplore';
 import RomeExplore from './RomeExplore';
+import DigitalMuseumLanding from './DigitalMuseumLanding.tsx';
+import NationMuseum from './NationMuseum.tsx';
+import CityMuseum from './CityMuseum.tsx';
 import QuizPage from './QuizPage';
 import DiscoveryScanner from './DiscoveryScanner';
 import LandmarkDetail from './LandmarkDetail';
@@ -22,6 +25,11 @@ interface Landmark {
 const WatercolorAtlasExplore = () => {
   const [showCologne, setShowCologne] = useState(false);
   const [showRome, setShowRome] = useState(false);
+  const [showDigitalLanding, setShowDigitalLanding] = useState(false);
+  const [showNation, setShowNation] = useState(false);
+  const [selectedNation, setSelectedNation] = useState<string | null>(null);
+  const [showCityMuseum, setShowCityMuseum] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(null);
   const [showScanner, setShowScanner] = useState(false);
   const [landmarkToScan, setLandmarkToScan] = useState<Landmark | null>(null);
@@ -71,6 +79,29 @@ const WatercolorAtlasExplore = () => {
   if (showCologne) return <CologneExplore onNavigateToRome={() => { setShowCologne(false); setShowRome(true); }} />;
   if (showQuiz) return <QuizPage onClose={() => setShowQuiz(false)} />;
 
+  // Digital Museum page flow
+  if (showDigitalLanding) return (
+    <DigitalMuseumLanding
+      onClose={() => setShowDigitalLanding(false)}
+      onOpenNation={(nation: string) => { setSelectedNation(nation); setShowDigitalLanding(false); setShowNation(true); }}
+    />
+  );
+
+  if (showNation && selectedNation) return (
+    <NationMuseum
+      nation={selectedNation}
+      onBack={() => { setShowNation(false); setSelectedNation(null); setShowDigitalLanding(true); }}
+      onOpenCity={(city: string) => { setSelectedCity(city); setShowNation(false); setShowCityMuseum(true); }}
+    />
+  );
+
+  if (showCityMuseum && selectedCity) return (
+    <CityMuseum
+      city={selectedCity}
+      onClose={() => { setShowCityMuseum(false); setSelectedCity(null); setShowDigitalLanding(true); }}
+    />
+  );
+
   return (
     <div className="h-screen w-full bg-amber-50 flex flex-col relative overflow-hidden">
       {/* background imaage (assets/ChatGPT_background.png)  */}
@@ -106,7 +137,7 @@ const WatercolorAtlasExplore = () => {
             <div className="flex gap-2">
             <button 
               className="p-2 rounded-full bg-white shadow-sm"
-              onClick={() => setShowMuseum(true)}
+              onClick={() => setShowDigitalLanding(true)}
               aria-label="Open Digital Museum"
             >
               <Book className="w-5 h-5 text-amber-800" />
