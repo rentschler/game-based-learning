@@ -15,6 +15,7 @@ const cologne0 = new URL('../assets/cologne_0.jpg', import.meta.url).href;
 const cologne1 = new URL('../assets/cologne_1.png', import.meta.url).href;
 const cologne2 = new URL('../assets/cologne_2.jpg', import.meta.url).href;
 const cologne3 = new URL('../assets/cologne_3.jpg', import.meta.url).href;
+const colosseumImage = new URL('../assets/colosseum_replica.jpg', import.meta.url).href;
 
 interface LandmarkBasic {
   id: number;
@@ -65,6 +66,9 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
       'Old Town Bridge': `The "Gamle Bybro" connects the center with Bakklandet, a postcard view of colorful wooden houses. Nicknamed the Gateway to Happiness, it's a beloved symbol of Trondheim.`,
       'Rockheim Museum': `Norway's national museum of pop and rock chronicles the sounds and scenes from the 1950s onward with immersive, interactive exhibits.`,
       'Stiftsgården': `Among Scandinavia's largest wooden residences, Stiftsgården has hosted the Norwegian royal family since the late 18th century and anchors the city's ceremonial life.`,
+      'Colosseum': `The iconic amphitheater of ancient Rome, this massive structure hosted gladiatorial contests, public spectacles, and could seat over 50,000 spectators. A symbol of Roman engineering and entertainment, it stands as one of the world's most recognizable monuments.`,
+      'Circus Maximus': `The largest stadium in ancient Rome, this massive chariot racing venue could accommodate over 150,000 spectators. For centuries, it was the center of Roman public entertainment, hosting thrilling races and grand celebrations.`,
+      'Caracalla Baths': `One of the largest and most luxurious public bath complexes of the Roman Empire, these baths featured elaborate mosaics, libraries, and exercise areas. A testament to Roman engineering and social life, they served as a hub of daily activity and relaxation.`,
     };
     return summaries[lm.name] || `A notable ${lm.category.toLowerCase()} landmark established in ${lm.year}. Its stories and design offer a window into the city's evolving identity.`;
   };
@@ -112,6 +116,8 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
                 ? kristianMain
                 : landmark.name === 'Cologne Cathedral'
                 ? cologne0
+                : landmark.name === 'Colosseum'
+                ? colosseumImage
                 : `https://placehold.co/1200x700/png?text=${encodeURIComponent(landmark.name)}`
             }
             alt={`${landmark.name} photo`}
@@ -147,6 +153,12 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
                 ? [kristian2, kristian3, kristian4]
                 : landmark.name === 'Cologne Cathedral'
                 ? [cologne1, cologne2, cologne3]
+                : landmark.name === 'Colosseum'
+                ? [
+                    `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}+Photo+1`,
+                    `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}+Photo+2`,
+                    `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}+Photo+3`
+                  ]
                 : [
                     `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}`,
                     `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}+Photo+2`,

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MapPin, Compass, Book, Trophy, User, Camera, Brain } from 'lucide-react';
 import CologneExplore from './CologneExplore';
+import RomeExplore from './RomeExplore';
 import QuizPage from './QuizPage';
 import DiscoveryScanner from './DiscoveryScanner';
 import LandmarkDetail from './LandmarkDetail';
@@ -20,6 +21,7 @@ interface Landmark {
 
 const WatercolorAtlasExplore = () => {
   const [showCologne, setShowCologne] = useState(false);
+  const [showRome, setShowRome] = useState(false);
   const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(null);
   const [showScanner, setShowScanner] = useState(false);
   const [landmarkToScan, setLandmarkToScan] = useState<Landmark | null>(null);
@@ -65,7 +67,8 @@ const WatercolorAtlasExplore = () => {
     setSelectedLandmark(null);
   };
 
-  if (showCologne) return <CologneExplore />;
+  if (showRome) return <RomeExplore onNavigateToTrondheim={() => setShowRome(false)} />;
+  if (showCologne) return <CologneExplore onNavigateToRome={() => { setShowCologne(false); setShowRome(true); }} />;
   if (showQuiz) return <QuizPage onClose={() => setShowQuiz(false)} />;
 
   return (

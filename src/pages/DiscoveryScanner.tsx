@@ -17,6 +17,13 @@ interface DiscoveryScannerProps {
   landmark: Landmark | null;
   onClose: () => void;
   onDiscoveryComplete: (landmarkId: number) => void;
+  // Optional customization props
+  backgroundImage?: string;
+  scanningText?: string;
+  scanningSubtext?: string;
+  recognizingText?: string;
+  recognizingSubtext?: string;
+  discoveredText?: string;
 }
 
 type ScanningState = 'initializing' | 'scanning' | 'recognizing' | 'discovered' | 'summary';
@@ -24,8 +31,16 @@ type ScanningState = 'initializing' | 'scanning' | 'recognizing' | 'discovered' 
 const DiscoveryScanner: React.FC<DiscoveryScannerProps> = ({ 
   landmark, 
   onClose, 
-  onDiscoveryComplete 
+  onDiscoveryComplete,
+  backgroundImage = oldBridgeScan,
+  scanningText = 'Scanning landmark...',
+  scanningSubtext,
+  recognizingText = 'Analyzing image...',
+  recognizingSubtext = 'Using ML recognition',
+  discoveredText = 'Discovery Unlocked! 🎉'
 }) => {
+  // Use landmark name in subtext if not provided
+  const finalScanningSubtext = scanningSubtext || `Point camera at ${landmark?.name || 'landmark'}`;
   const [scanningState, setScanningState] = useState<ScanningState>('initializing');
   const [scanProgress, setScanProgress] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -124,12 +139,12 @@ const DiscoveryScanner: React.FC<DiscoveryScannerProps> = ({
           className="absolute inset-0 opacity-40"
           style={{
             // Show the photo only while scanning. During 'recognizing' (analyzing image) remove the background entirely.
-            backgroundImage:
-              scanningState === 'scanning'
-                ? `url('${oldBridgeScan}')`
-                : scanningState === 'recognizing'
-                ? 'none'
-                : 'url("data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noise)" opacity="0.05" /%3E%3C/svg%3E")',
+                backgroundImage:
+                  scanningState === 'scanning'
+                    ? `url('${backgroundImage}')`
+                    : scanningState === 'recognizing'
+                    ? 'none'
+                    : 'url("data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noise)" opacity="0.05" /%3E%3C/svg%3E")',
             backgroundSize: scanningState === 'scanning' ? 'cover' : undefined,
             backgroundPosition: scanningState === 'scanning' ? 'center' : undefined,
             // Only animate grain when using the SVG noise background
@@ -204,8 +219,8 @@ const DiscoveryScanner: React.FC<DiscoveryScannerProps> = ({
               />
             </div>
             
-            <p className="text-white text-xl mb-2">Scanning landmark...</p>
-            <p className="text-cyan-400 text-sm mb-4">Point camera at {landmark.name}</p>
+                <p className="text-white text-xl mb-2">{scanningText}</p>
+                <p className="text-cyan-400 text-sm mb-4">{finalScanningSubtext}</p>
             
             {/* Progress bar */}
             <div className="w-64 h-2 bg-white/20 rounded-full mx-auto overflow-hidden">
@@ -229,8 +244,8 @@ const DiscoveryScanner: React.FC<DiscoveryScannerProps> = ({
                 <div className="w-24 h-24 rounded-full bg-cyan-400/50 animate-ping" />
               </div>
             </div>
-            <p className="text-white text-xl">Analyzing image...</p>
-            <p className="text-cyan-400 text-sm mt-2">Using ML recognition</p>
+                <p className="text-white text-xl">{recognizingText}</p>
+                <p className="text-cyan-400 text-sm mt-2">{recognizingSubtext}</p>
           </div>
         )}
 
@@ -265,10 +280,10 @@ const DiscoveryScanner: React.FC<DiscoveryScannerProps> = ({
               </div>
             </div>
             
-            {/* Discovery Text */}
-            <h2 className="text-4xl font-bold text-white mb-2 animate-bounce">
-              Discovery Unlocked! 🎉
-            </h2>
+                {/* Discovery Text */}
+                <h2 className="text-4xl font-bold text-white mb-2 animate-bounce">
+                  {discoveredText}
+                </h2>
             <h3 className="text-2xl font-serif text-yellow-400 mb-6">{landmark.name}</h3>
             
             {/* Rewards */}

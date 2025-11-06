@@ -16,11 +16,11 @@ interface Landmark {
   metersAway: number;
 }
 
-interface CologneExploreProps {
-  onNavigateToRome?: () => void;
+interface RomeExploreProps {
+  onNavigateToTrondheim?: () => void;
 }
 
-const CologneExplore = ({ onNavigateToRome }: CologneExploreProps) => {
+const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
   const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(null);
   const [showScanner, setShowScanner] = useState(false);
   const [landmarkToScan, setLandmarkToScan] = useState<Landmark | null>(null);
@@ -29,22 +29,20 @@ const CologneExplore = ({ onNavigateToRome }: CologneExploreProps) => {
   const [showMuseum, setShowMuseum] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
 
-  // Landmark data for Cologne (sample positions)
+  // Landmark data for Rome
   const [landmarks, setLandmarks] = useState([
-    { id: 1, name: 'Cologne Cathedral', x: 82, y: 42, discovered: true, category: 'Historic', year: '1248', metersAway: 120 },
-    { id: 2, name: 'Hohenzollern Bridge', x: 58, y: 75, discovered: false, category: 'Architecture', year: '1911', metersAway: 300 },
-    { id: 3, name: 'Museum Ludwig', x: 22, y: 2, discovered: false, category: 'Culture', year: '1976', metersAway: 200 },
-    { id: 4, name: 'Rheinauhafen', x: 68, y: 58, discovered: false, category: 'Architecture', year: '2000', metersAway: 500 },
-    { id: 5, name: 'Roman-Germanic Museum', x: 48, y: 42, discovered: false, category: 'Historic', year: '1974', metersAway: 250 },
+    { id: 1, name: 'Colosseum', x: 50, y: 45, discovered: true, category: 'Historic', year: '80 AD', metersAway: 0 },
+    { id: 2, name: 'Circus Maximus', x: 35, y: 65, discovered: false, category: 'Historic', year: '6th century BC', metersAway: 500 },
+    { id: 3, name: 'Caracalla Baths', x: 65, y: 70, discovered: false, category: 'Historic', year: '216 AD', metersAway: 800 },
   ]);
 
   const discoveredCount = landmarks.filter(l => l.discovered).length;
   const totalCount = landmarks.length;
 
-  // Position the user indicator near the main cathedral by default
-  const mainCathedral = landmarks.find(l => l.name === 'Cologne Cathedral');
-  const userX = mainCathedral ? mainCathedral.x + 6 : 50;
-  const userY = mainCathedral ? mainCathedral.y + 4 : 50;
+  // Position the user indicator near the Colosseum by default
+  const colosseum = landmarks.find(l => l.name === 'Colosseum');
+  const userX = colosseum ? colosseum.x + 6 : 50;
+  const userY = colosseum ? colosseum.y + 4 : 50;
 
   // Handle discovery completion
   const handleDiscoveryComplete = (landmarkId: number) => {
@@ -68,9 +66,9 @@ const CologneExplore = ({ onNavigateToRome }: CologneExploreProps) => {
 
   return (
     <div className="h-screen w-full bg-amber-50 flex flex-col relative overflow-hidden">
-      {/* Cologne map background */}
+      {/* Rome map background */}
       <div className="absolute inset-0">
-        <img src={'/src/assets/cologne_map.png'} alt="Cologne Map" className="object-cover w-full h-full opacity-50" />
+        <img src={'/src/assets/rome_historic.png'} alt="Rome Map" className="object-cover w-full h-full opacity-50" />
       </div>
 
       {/* Watercolor texture overlay */}
@@ -86,20 +84,20 @@ const CologneExplore = ({ onNavigateToRome }: CologneExploreProps) => {
       <div className="relative z-20 bg-gradient-to-b from-amber-100 to-amber-50 px-4 py-3 shadow-sm border-b-2 border-amber-200">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {onNavigateToRome && (
+            {onNavigateToTrondheim && (
               <button
-                onClick={onNavigateToRome}
+                onClick={onNavigateToTrondheim}
                 className="p-0"
-                aria-label="Navigate to Rome"
+                aria-label="Navigate to Trondheim"
               >
                 <Compass className="w-6 h-6 text-amber-800" />
               </button>
             )}
-            {!onNavigateToRome && (
+            {!onNavigateToTrondheim && (
               <Compass className="w-6 h-6 text-amber-800" />
             )}
             <div>
-              <h1 className="text-lg font-serif text-amber-900">Cologne</h1>
+              <h1 className="text-lg font-serif text-amber-900">Rome</h1>
               <p className="text-xs text-amber-700">{discoveredCount}/{totalCount} landmarks discovered</p>
             </div>
           </div>
@@ -315,7 +313,7 @@ const CologneExplore = ({ onNavigateToRome }: CologneExploreProps) => {
       {/* Digital Museum Modal */}
       {showMuseum && (
         <Museum 
-          cityName="Cologne"
+          cityName="Rome"
           items={landmarks}
           onClose={() => setShowMuseum(false)}
         />
@@ -324,4 +322,5 @@ const CologneExplore = ({ onNavigateToRome }: CologneExploreProps) => {
   );
 };
 
-export default CologneExplore;
+export default RomeExplore;
+
