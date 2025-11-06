@@ -30,17 +30,50 @@ const BUILDINGS: { key: string; label: string; src: string; left: string; top: s
 ];
 
 const DigitalMuseumLanding = ({ onOpenNation, onClose }: Props) => {
-  // Colosseum is hidden by default; pressing 'c' toggles its visibility
+  // Which buildings are currently visible. Only Norway is visible by default.
+  const initialShown = BUILDINGS.reduce((acc, b) => {
+    acc[b.key] = b.key === 'norway';
+    return acc;
+  }, {} as Record<string, boolean>);
+  const [shown, setShown] = useState<Record<string, boolean>>(initialShown);
+
+  // Colosseum toggle kept separate (still toggled via 'c')
   const [showColosseum, setShowColosseum] = useState(false);
+
+  // animation / timeouts refs to allow cleanup
+  const timeouts: { current: number[] } = { current: [] } as any;
+  const isAnimatingRef: { current: boolean } = { current: false } as any;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'c' || e.key === 'C') {
         setShowColosseum((v) => !v);
       }
+      if (e.key === 'b' || e.key === 'B') {
+        // start reveal sequence for selected buildings
+        if (isAnimatingRef.current) return;
+        isAnimatingRef.current = true;
+        const order = ['estonia', 'germany', 'italy', 'movies'];
+        order.forEach((key, i) => {
+          const t = window.setTimeout(() => {
+            setShown((prev) => ({ ...prev, [key]: true }));
+          }, i * 1000);
+          timeouts.current.push(t);
+        });
+        // clear animating flag after last timeout
+        const endTimeout = window.setTimeout(() => {
+          isAnimatingRef.current = false;
+        }, order.length * 1000);
+        timeouts.current.push(endTimeout);
+      }
     };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      // cleanup any pending timeouts
+      timeouts.current.forEach((t: number) => clearTimeout(t));
+      timeouts.current = [];
+    };
   }, []);
   return (
     <div className="fixed inset-0 z-50 bg-white overflow-auto">
@@ -58,7 +91,13 @@ const DigitalMuseumLanding = ({ onOpenNation, onClose }: Props) => {
           <div className="absolute inset-0 pointer-events-none">
             {/* Render each building as an absolutely positioned element over the island */}
             {BUILDINGS.map(b => {
-              if (b.key === 'colosseum' && !showColosseum) return null;
+              // handle colosseum separately (toggled with 'c')
+              if (b.key === 'colosseum') {
+                if (!showColosseum) return null;
+              } else {
+                // other buildings follow the shown map (only Norway visible initially)
+                if (!shown[b.key]) return null;
+              }
               const isCol = b.key === 'colosseum';
               // slightly smaller colosseum as requested
               const imgW = isCol ? 100 : 166;
