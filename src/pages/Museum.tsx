@@ -8,6 +8,17 @@ const kristianMain = new URL('../assets/Kristiansten_Festning_sunrise_red_canon.
 const cologne0 = new URL('../assets/cologne_0.jpg', import.meta.url).href;
 const colosseumImage = new URL('../assets/colosseum_replica.jpg', import.meta.url).href;
 
+// Photo galleries matching LandmarkDetail.tsx
+const nidaros1Image = new URL('../assets/nidaros_1.jpg', import.meta.url).href;
+const nidaros01Image = new URL('../assets/Nidaros_Cathedral_01.jpg', import.meta.url).href;
+const nidaros712Image = new URL('../assets/Nidarosdomen_7.1.2.jpg', import.meta.url).href;
+const kristian2 = new URL('../assets/fortress2.jpg', import.meta.url).href;
+const kristian3 = new URL('../assets/fortress3.jpg', import.meta.url).href;
+const kristian4 = new URL('../assets/fortress4.jpg', import.meta.url).href;
+const cologne1 = new URL('../assets/cologne_1.png', import.meta.url).href;
+const cologne2 = new URL('../assets/cologne_2.jpg', import.meta.url).href;
+const cologne3 = new URL('../assets/cologne_3.jpg', import.meta.url).href;
+
 export interface Landmark {
   id: number;
   name: string;
@@ -50,6 +61,13 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
     if (name === 'Colosseum') return colosseumImage;
     // default placeholder
     return `https://placehold.co/600x400/png?text=${encodeURIComponent(name)}`;
+  };
+
+  const getPhotos = (name: string): string[] => {
+    if (name === 'Nidaros Cathedral') return [nidaros1Image, nidaros01Image, nidaros712Image];
+    if (name === 'Kristiansten Fortress') return [kristian2, kristian3, kristian4];
+    if (name === 'Cologne Cathedral') return [cologne1, cologne2, cologne3];
+    return []; // Return empty array if no photos available
   };
 
   return (
@@ -142,11 +160,7 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
         <LandmarkDetail 
           landmark={selected}
           onClose={() => setSelected(null)}
-          photos={[
-            `https://placehold.co/1200x700/png?text=${encodeURIComponent(selected.name)}`,
-            `https://placehold.co/800x600/png?text=${encodeURIComponent(selected.name)}+2`,
-            `https://placehold.co/800x600/png?text=${encodeURIComponent(selected.name)}+3`,
-          ]}
+          photos={getPhotos(selected.name)}
         />
       )}
     </div>
