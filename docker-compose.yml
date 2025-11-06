@@ -47,13 +47,13 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: Dockerfile.frontend
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: cityexplorer_frontend
     environment:
       VITE_API_BASE_URL: http://localhost:8000
     volumes:
-      - .:/app
+      - ./frontend:/app
       - /app/node_modules
     ports:
       - "5173:5173"
