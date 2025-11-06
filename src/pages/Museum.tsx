@@ -18,6 +18,10 @@ const kristian4 = new URL('../assets/fortress4.jpg', import.meta.url).href;
 const cologne1 = new URL('../assets/cologne_1.png', import.meta.url).href;
 const cologne2 = new URL('../assets/cologne_2.jpg', import.meta.url).href;
 const cologne3 = new URL('../assets/cologne_3.jpg', import.meta.url).href;
+// Trondheim landmarks
+const oldBridgeImage = new URL('../assets/Trondheim/Gamble-Bybro.jpg', import.meta.url).href;
+const rockheimImage = new URL('../assets/Trondheim/rockheim.jpg', import.meta.url).href;
+const stiftsgardenImage = new URL('../assets/Trondheim/Stiftsgården.jpg', import.meta.url).href;
 
 export interface Landmark {
   id: number;
@@ -59,6 +63,9 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
     if (name === 'Kristiansten Fortress') return kristianMain;
     if (name === 'Cologne Cathedral') return cologne0;
     if (name === 'Colosseum') return colosseumImage;
+    if (name === 'Old Town Bridge') return oldBridgeImage;
+    if (name === 'Rockheim Museum') return rockheimImage;
+    if (name === 'Stiftsgården') return stiftsgardenImage;
     // default placeholder
     return `https://placehold.co/600x400/png?text=${encodeURIComponent(name)}`;
   };
@@ -67,6 +74,9 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
     if (name === 'Nidaros Cathedral') return [nidaros1Image, nidaros01Image, nidaros712Image];
     if (name === 'Kristiansten Fortress') return [kristian2, kristian3, kristian4];
     if (name === 'Cologne Cathedral') return [cologne1, cologne2, cologne3];
+    if (name === 'Old Town Bridge') return [oldBridgeImage];
+    if (name === 'Rockheim Museum') return [rockheimImage];
+    if (name === 'Stiftsgården') return [stiftsgardenImage];
     return []; // Return empty array if no photos available
   };
 

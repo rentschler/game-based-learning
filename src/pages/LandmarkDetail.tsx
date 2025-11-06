@@ -16,6 +16,10 @@ const cologne1 = new URL('../assets/cologne_1.png', import.meta.url).href;
 const cologne2 = new URL('../assets/cologne_2.jpg', import.meta.url).href;
 const cologne3 = new URL('../assets/cologne_3.jpg', import.meta.url).href;
 const colosseumImage = new URL('../assets/colosseum_replica.jpg', import.meta.url).href;
+// Trondheim landmarks
+const oldBridgeImage = new URL('../assets/Trondheim/Gamble-Bybro.jpg', import.meta.url).href;
+const rockheimImage = new URL('../assets/Trondheim/rockheim.jpg', import.meta.url).href;
+const stiftsgardenImage = new URL('../assets/Trondheim/Stiftsgården.jpg', import.meta.url).href;
 
 interface LandmarkBasic {
   id: number;
@@ -118,6 +122,12 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
                 ? cologne0
                 : landmark.name === 'Colosseum'
                 ? colosseumImage
+                : landmark.name === 'Old Town Bridge'
+                ? oldBridgeImage
+                : landmark.name === 'Rockheim Museum'
+                ? rockheimImage
+                : landmark.name === 'Stiftsgården'
+                ? stiftsgardenImage
                 : `https://placehold.co/1200x700/png?text=${encodeURIComponent(landmark.name)}`
             }
             alt={`${landmark.name} photo`}
@@ -145,6 +155,12 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
             ? [kristian2, kristian3, kristian4]
             : landmark.name === 'Cologne Cathedral'
             ? [cologne1, cologne2, cologne3]
+            : landmark.name === 'Old Town Bridge'
+            ? [oldBridgeImage]
+            : landmark.name === 'Rockheim Museum'
+            ? [rockheimImage]
+            : landmark.name === 'Stiftsgården'
+            ? [stiftsgardenImage]
             : [];
 
           if (photosToShow.length === 0) return null;
