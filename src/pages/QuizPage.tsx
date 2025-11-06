@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Check, Star, Trophy, Sparkles, Zap } from 'lucide-react';
+import { addXP } from '../utils/score';
 
 type QuizQuestion = {
   id: number;
@@ -58,6 +59,7 @@ export default function QuizPage({ onClose }: { onClose?: () => void }) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showPraise, setShowPraise] = useState(false);
   const [praiseMessage, setPraiseMessage] = useState('');
+  const [xpAwarded, setXpAwarded] = useState(false);
 
   const selectOption = (idx: number) => {
     if (selected !== null) return; // Prevent changing answer after selection
@@ -96,8 +98,16 @@ export default function QuizPage({ onClose }: { onClose?: () => void }) {
   const progress = ((current + (selected !== null ? 1 : 0)) / questions.length) * 100;
   const score: number = answers.reduce<number>((acc, ans, i) => (ans === questions[i].correctIndex ? acc + 1 : acc), 0);
   
-  // Calculate XP: 15 XP per correct answer, plus 25 XP bonus for perfect score
-  const earnedXP = score * 15 + (score === questions.length ? 25 : 0);
+  // Quiz Bonus: Fixed 60 XP for completing the quiz
+  const earnedXP = 60;
+
+  // Award XP when quiz is completed (only once per completion)
+  useEffect(() => {
+    if (showResults && !xpAwarded) {
+      addXP(earnedXP);
+      setXpAwarded(true);
+    }
+  }, [showResults, xpAwarded, earnedXP]);
 
   return (
     <div className="h-screen w-full bg-gradient-to-b from-sky-50 to-white flex flex-col items-center p-6 relative overflow-hidden">
@@ -353,6 +363,7 @@ export default function QuizPage({ onClose }: { onClose?: () => void }) {
                     setAnswers(Array(questions.length).fill(null));
                     setShowConfetti(false);
                     setShowPraise(false);
+                    setXpAwarded(false); // Reset XP award flag for retry
                   }} 
                   className="px-6 py-3 rounded-xl bg-white border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all font-medium"
                 >

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { X, MapPin, Sparkles, Trophy, Star, Zap, Camera } from 'lucide-react';
+import { addXP } from '../utils/score';
 
 // Resolve local assets via Vite's import.meta.url so TypeScript doesn't need custom declarations for .jpg
 const nidarosImage = new URL('../assets/nidaros_cathedral.jpg', import.meta.url).href;
@@ -35,12 +36,15 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
   const [badge, setBadge] = useState('');
 
   useEffect(() => {
-    // Simulate loading content and rewards similar to DiscoveryScanner summary stage
-    const xp = Math.floor(Math.random() * 25) + 25; // 25-50 XP for reading more
+    // Reading Bonus: Fixed 34 XP for reading landmark details
+    const xp = 34;
     setEarnedXP(xp);
     setBadge(getBadgeForCategory(landmark.category));
     const summary = generateAISummary(landmark);
     setAiSummary(summary);
+    
+    // Award XP when landmark details are viewed
+    addXP(xp);
   }, [landmark]);
 
   const getBadgeForCategory = (category: string): string => {
