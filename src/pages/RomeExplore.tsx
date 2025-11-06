@@ -31,18 +31,18 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
 
   // Landmark data for Rome
   const [landmarks, setLandmarks] = useState([
-    { id: 1, name: 'Colosseum', x: 50, y: 45, discovered: true, category: 'Historic', year: '80 AD', metersAway: 0 },
-    { id: 2, name: 'Circus Maximus', x: 35, y: 65, discovered: false, category: 'Historic', year: '6th century BC', metersAway: 500 },
-    { id: 3, name: 'Caracalla Baths', x: 65, y: 70, discovered: false, category: 'Historic', year: '216 AD', metersAway: 800 },
+    { id: 1, name: 'Coloseum', x: 69, y: 45, discovered: true, category: 'Historic', year: '80 AD', metersAway: 0 },
+    { id: 2, name: 'Circus Maximus', x: 47, y: 53, discovered: false, category: 'Historic', year: '6th century BC', metersAway: 500 },
+    { id: 3, name: 'Caracalla Baths', x: 69, y: 68, discovered: false, category: 'Historic', year: '216 AD', metersAway: 800 },
   ]);
 
   const discoveredCount = landmarks.filter(l => l.discovered).length;
   const totalCount = landmarks.length;
 
-  // Position the user indicator near the Colosseum by default
-  const colosseum = landmarks.find(l => l.name === 'Colosseum');
-  const userX = colosseum ? colosseum.x + 6 : 50;
-  const userY = colosseum ? colosseum.y + 4 : 50;
+  // Position the user indicator near the Coloseum by default
+  const coloseum = landmarks.find(l => l.name === 'Coloseum');
+  const userX = coloseum ? coloseum.x + 6 : 50;
+  const userY = coloseum ? coloseum.y + 4 : 50;
 
   // Handle discovery completion
   const handleDiscoveryComplete = (landmarkId: number) => {
