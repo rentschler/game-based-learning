@@ -6,6 +6,7 @@ import LandmarkDetail from './LandmarkDetail';
 const nidarosImage = new URL('../assets/nidaros_cathedral.jpg', import.meta.url).href;
 const kristianMain = new URL('../assets/Kristiansten_Festning_sunrise_red_canon.jpg', import.meta.url).href;
 const cologne0 = new URL('../assets/cologne_0.jpg', import.meta.url).href;
+const colosseumImage = new URL('../assets/colosseum_replica.jpg', import.meta.url).href;
 
 export interface Landmark {
   id: number;
@@ -46,6 +47,7 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
     if (name === 'Nidaros Cathedral') return nidarosImage;
     if (name === 'Kristiansten Fortress') return kristianMain;
     if (name === 'Cologne Cathedral') return cologne0;
+    if (name === 'Colosseum') return colosseumImage;
     // default placeholder
     return `https://placehold.co/600x400/png?text=${encodeURIComponent(name)}`;
   };
