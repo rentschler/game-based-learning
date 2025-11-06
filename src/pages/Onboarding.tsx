@@ -4,6 +4,7 @@ import { MapPin, Camera, Sparkles, CheckCircle, Star, Trophy } from 'lucide-reac
 // Assets
 const logoImage = new URL('../assets/oboarding/logo.png', import.meta.url).href;
 const oldBridgeScan = new URL('../assets/old_bridge_scan.jpg', import.meta.url).href;
+const trodnheimImage = new URL('../assets/trodnheim.jpg', import.meta.url).href;
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -301,7 +302,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
               style={{
                 backgroundImage:
                   scanningState === 'scanning'
-                    ? `url('${oldBridgeScan}')`
+                    ? `url('${trodnheimImage}')`
                     : scanningState === 'recognizing'
                     ? 'none'
                     : 'url("data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noise)" opacity="0.05" /%3E%3C/svg%3E")',
@@ -362,7 +363,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
                   />
                 </div>
                 
-                <p className="text-white text-xl mb-2">Scanning landmark...</p>
+                <p className="text-white text-xl mb-2">Use the scanner to unlock new landmarks</p>
                 <p className="text-cyan-400 text-sm mb-4">Point camera at landmark</p>
                 
                 {/* Progress bar */}
@@ -387,8 +388,8 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
                     <div className="w-24 h-24 rounded-full bg-cyan-400/50 animate-ping" />
                   </div>
                 </div>
-                <p className="text-white text-xl">Analyzing image...</p>
-                <p className="text-cyan-400 text-sm mt-2">Using ML recognition</p>
+                <p className="text-white text-xl">Identifying landmark...</p>
+                <p className="text-cyan-400 text-sm mt-2">Matching with database</p>
               </div>
             )}
 
@@ -425,7 +426,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
                 
                 {/* Discovery Text */}
                 <h2 className="text-4xl font-bold text-white mb-2 animate-bounce">
-                  Discovery Unlocked! 🎉
+                  Unlock new Discoveries
                 </h2>
                 
                 {/* Rewards */}
