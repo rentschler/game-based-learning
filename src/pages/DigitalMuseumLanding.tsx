@@ -14,12 +14,18 @@ const italy = '/src/assets/digital_Museum/museum_italy.png';
 const movies = '/src/assets/digital_Museum/museum_movies.png';
 const norway = '/src/assets/digital_Museum/museum_norway.png';
 
-const BUILDINGS: { key: string; label: string; src: string }[] = [
-  { key: 'estonia', label: 'Estonia', src: estonia },
-  { key: 'germany', label: 'Germany', src: germany },
-  { key: 'italy', label: 'Italy', src: italy },
-  { key: 'movies', label: 'Movies', src: movies },
-  { key: 'norway', label: 'Norway', src: norway },
+// Add absolute positions (percentages) for each building so we can place them
+// over the island image at the requested coordinates (approximated from the
+// provided sketch). Positions are the center point for each thumbnail.
+const BUILDINGS: { key: string; label: string; src: string; left: string; top: string }[] = [
+  // nudged further down as requested
+  // nudged slightly up as requested
+  { key: 'estonia', label: 'Estonia', src: estonia, left: '22%', top: '49.5%' },
+  { key: 'germany', label: 'Germany', src: germany, left: '38%', top: '42%' },
+  { key: 'italy', label: 'Italy', src: italy, left: '52%', top: '46%' },
+  { key: 'colosseum', label: 'Colosseum', src: '/src/assets/digital_Museum/JUST_Coloseum.png', left: '60%', top: '52.5%' },
+  { key: 'movies', label: 'Movies', src: movies, left: '68%', top: '40%' },
+  { key: 'norway', label: 'Norway', src: norway, left: '79%', top: '50%' },
 ];
 
 const DigitalMuseumLanding = ({ onOpenNation, onClose }: Props) => {
@@ -36,20 +42,32 @@ const DigitalMuseumLanding = ({ onOpenNation, onClose }: Props) => {
         <div className="relative bg-amber-50 rounded-xl overflow-hidden">
           <img src={island} alt="Island background" className="w-full object-cover" />
 
-          <div className="absolute inset-0 flex items-start justify-center pointer-events-none">
-            <div className="w-full max-w-4xl mt-8 grid grid-cols-5 gap-6 pointer-events-auto">
-              {BUILDINGS.map(b => (
-                <button
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Render each building as an absolutely positioned element over the island */}
+            {BUILDINGS.map(b => {
+              const isCol = b.key === 'colosseum';
+              // slightly smaller colosseum as requested
+              const imgW = isCol ? 100 : 166;
+              const imgH = isCol ? 58 : 95;
+              return (
+                <div
                   key={b.key}
-                  onClick={() => onOpenNation(b.key)}
-                  className="flex flex-col items-center gap-2 bg-white/80 rounded-lg p-2 shadow-sm hover:scale-105 transition-transform"
-                  style={{ width: 166 }}
+                  className="absolute pointer-events-auto flex items-center justify-center"
+                  style={{ left: b.left, top: b.top, transform: 'translate(-50%, -50%)', width: imgW }}
                 >
-                  <img src={b.src} alt={b.label} width={166} height={95} className="object-cover rounded-md" />
-                  <span className="text-xs text-amber-800">{b.label}</span>
-                </button>
-              ))}
-            </div>
+                  <img src={b.src} alt={b.label} width={imgW} height={imgH} className="object-cover rounded-md" />
+
+                  {/* Invisible clickable overlay button (covers the image area) */}
+                  <button
+                    aria-label={`Open ${b.label} museum`}
+                    title={`Open ${b.label} museum`}
+                    onClick={() => onOpenNation(b.key)}
+                    className="absolute border-0 bg-transparent p-0 m-0 opacity-0"
+                    style={{ left: 0, top: 0, width: `${imgW}px`, height: `${imgH}px` }}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
