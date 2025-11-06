@@ -5,6 +5,7 @@ import QuizPage from './QuizPage';
 import DiscoveryScanner from './DiscoveryScanner';
 import LandmarkDetail from './LandmarkDetail';
 import Museum from './Museum';
+import Profile from './Profile';
 
 interface Landmark {
   id: number;
@@ -26,6 +27,7 @@ const WatercolorAtlasExplore = () => {
   const [landmarkToShow, setLandmarkToShow] = useState<Landmark | null>(null);
   const [showMuseum, setShowMuseum] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   // Landmark data - discovered vs undiscovered
   const [landmarks, setLandmarks] = useState([
@@ -117,7 +119,11 @@ const WatercolorAtlasExplore = () => {
             <button className="p-2 rounded-full bg-white shadow-sm">
               <Trophy className="w-5 h-5 text-amber-800" />
             </button>
-            <button className="p-2 rounded-full bg-white shadow-sm">
+            <button 
+              className="p-2 rounded-full bg-white shadow-sm"
+              onClick={() => setShowProfile(true)}
+              aria-label="Open Profile"
+            >
               <User className="w-5 h-5 text-amber-800" />
             </button>
           </div>
@@ -329,6 +335,15 @@ const WatercolorAtlasExplore = () => {
           cityName="Trondheim"
           items={landmarks}
           onClose={() => setShowMuseum(false)}
+        />
+      )}
+
+      {/* Profile Modal */}
+      {showProfile && (
+        <Profile 
+          onClose={() => setShowProfile(false)}
+          discoveredLandmarks={discoveredCount}
+          totalLandmarks={totalCount}
         />
       )}
     </div>

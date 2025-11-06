@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Camera, X, Sparkles, Trophy, Star, MapPin, Zap, CheckCircle } from 'lucide-react';
+import { addXP } from '../utils/score';
 
 // Local scanning background image (place the file at src/assets/old_bridge_scan.jpg)
 const oldBridgeScan = new URL('../assets/old_bridge_scan.jpg', import.meta.url).href;
@@ -64,10 +65,13 @@ const DiscoveryScanner: React.FC<DiscoveryScannerProps> = ({
       setScanningState('discovered');
       setShowConfetti(true);
       
-      // Calculate rewards
-      const xp = Math.floor(Math.random() * 50) + 50; // 50-100 XP
+      // Experience: Fixed 50 XP for unlocking new landmarks
+      const xp = 50;
       setEarnedXP(xp);
       setBadge(getBadgeForCategory(landmark.category));
+      
+      // Award XP when landmark is discovered
+      addXP(xp);
 
       // Generate AI summary
       await new Promise(resolve => setTimeout(resolve, 3000));
