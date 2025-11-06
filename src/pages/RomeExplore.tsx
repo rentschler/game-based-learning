@@ -451,8 +451,6 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
         </div>
       )}
 
-      // -- helper refs and functions injected below --
-
       {/* Discovery Scanner Modal */}
       {showScanner && landmarkToScan && (
         <DiscoveryScanner
