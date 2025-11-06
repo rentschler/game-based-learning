@@ -11,7 +11,7 @@ const CITY_MAP: Record<string, string[]> = {
   germany: ['Cologne', 'Berlin', 'Munich', 'Hamburg'],
   norway: ['Trondheim', 'Oslo', 'Bergen', 'Stavanger'],
   estonia: ['Tallinn', 'Tartu', 'Pärnu', 'Narva'],
-  movies: ['Hollywood', 'Bollywood', 'Cannes', 'Burbank']
+  movies: ['Star Wars', 'The Lord of the Rings', 'James Bond']
 };
 
 const NationMuseum = ({ nation, onBack, onOpenCity }: Props) => {

@@ -121,6 +121,23 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
     setSelectedLandmark(null);
   };
 
+  // Gladiator popup state - appears when pressing 'U'
+  const [showGladiatorPopup, setShowGladiatorPopup] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'u' || e.key === 'U') {
+        setShowGladiatorPopup(true);
+      }
+      // optional: allow Esc to close
+      if (e.key === 'Escape') {
+        setShowGladiatorPopup(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   if (showQuiz) return <QuizPage onClose={() => setShowQuiz(false)} />;
 
   return (
@@ -461,6 +478,32 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
           }}
           onDiscoveryComplete={handleDiscoveryComplete}
         />
+      )}
+
+      {/* Gladiator notification popup (triggered by pressing 'U') */}
+      {showGladiatorPopup && (
+        <div className="absolute inset-0 z-60 flex items-start justify-center pt-16">
+          <div className="relative w-[90%] max-w-sm bg-white rounded-2xl shadow-2xl border border-amber-200 p-5" style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.2)' }}>
+            {/* Close button top-right */}
+            <button
+              onClick={() => setShowGladiatorPopup(false)}
+              aria-label="Close"
+              className="absolute -top-3 -right-3 w-9 h-9 bg-white rounded-full shadow flex items-center justify-center border border-gray-200 text-gray-600 hover:bg-amber-50"
+            >
+              ✕
+            </button>
+
+            <div className="text-center text-sm text-amber-900 font-medium mb-4">
+              You are near to a famous movie location
+              <br />
+              from the movie: <strong>Gladiator!</strong>
+            </div>
+
+            <div className="overflow-hidden rounded-lg bg-gray-100 border border-amber-100">
+              <img src="/src/assets/gladiator.jpg" alt="Gladiator" className="w-full h-40 object-cover" />
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Landmark Detail Modal */}
