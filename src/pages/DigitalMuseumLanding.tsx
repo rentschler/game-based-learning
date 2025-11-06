@@ -1,4 +1,5 @@
 import { X } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface Props {
   onOpenNation: (nation: string) => void;
@@ -29,6 +30,18 @@ const BUILDINGS: { key: string; label: string; src: string; left: string; top: s
 ];
 
 const DigitalMuseumLanding = ({ onOpenNation, onClose }: Props) => {
+  // Colosseum is hidden by default; pressing 'c' toggles its visibility
+  const [showColosseum, setShowColosseum] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'c' || e.key === 'C') {
+        setShowColosseum((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
   return (
     <div className="fixed inset-0 z-50 bg-white overflow-auto">
       <div className="max-w-5xl mx-auto p-4">
@@ -45,6 +58,7 @@ const DigitalMuseumLanding = ({ onOpenNation, onClose }: Props) => {
           <div className="absolute inset-0 pointer-events-none">
             {/* Render each building as an absolutely positioned element over the island */}
             {BUILDINGS.map(b => {
+              if (b.key === 'colosseum' && !showColosseum) return null;
               const isCol = b.key === 'colosseum';
               // slightly smaller colosseum as requested
               const imgW = isCol ? 100 : 166;
