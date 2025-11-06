@@ -58,7 +58,7 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
     if (name === 'Nidaros Cathedral') return nidarosImage;
     if (name === 'Kristiansten Fortress') return kristianMain;
     if (name === 'Cologne Cathedral') return cologne0;
-    if (name === 'Coloseum') return colosseumImage;
+    if (name === 'Colosseum') return colosseumImage;
     // default placeholder
     return `https://placehold.co/600x400/png?text=${encodeURIComponent(name)}`;
   };

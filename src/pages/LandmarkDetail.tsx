@@ -66,7 +66,7 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
       'Old Town Bridge': `The "Gamle Bybro" connects the center with Bakklandet, a postcard view of colorful wooden houses. Nicknamed the Gateway to Happiness, it's a beloved symbol of Trondheim.`,
       'Rockheim Museum': `Norway's national museum of pop and rock chronicles the sounds and scenes from the 1950s onward with immersive, interactive exhibits.`,
       'Stiftsgården': `Among Scandinavia's largest wooden residences, Stiftsgården has hosted the Norwegian royal family since the late 18th century and anchors the city's ceremonial life.`,
-  'Coloseum': `The iconic amphitheater of ancient Rome, this massive structure hosted gladiatorial contests, public spectacles, and could seat over 50,000 spectators. A symbol of Roman engineering and entertainment, it stands as one of the world's most recognizable monuments.`,
+  'Colosseum': `The iconic amphitheater of ancient Rome, this massive structure hosted gladiatorial contests, public spectacles, and could seat over 50,000 spectators. A symbol of Roman engineering and entertainment, it stands as one of the world's most recognizable monuments.`,
       'Circus Maximus': `The largest stadium in ancient Rome, this massive chariot racing venue could accommodate over 150,000 spectators. For centuries, it was the center of Roman public entertainment, hosting thrilling races and grand celebrations.`,
       'Caracalla Baths': `One of the largest and most luxurious public bath complexes of the Roman Empire, these baths featured elaborate mosaics, libraries, and exercise areas. A testament to Roman engineering and social life, they served as a hub of daily activity and relaxation.`,
     };
@@ -116,7 +116,7 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
                 ? kristianMain
                 : landmark.name === 'Cologne Cathedral'
                 ? cologne0
-                : landmark.name === 'Coloseum'
+                : landmark.name === 'Colosseum'
                   ? colosseumImage
                 : `https://placehold.co/1200x700/png?text=${encodeURIComponent(landmark.name)}`
             }
@@ -196,7 +196,7 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
             className="px-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-medium border border-white/20 hover:bg-white/20 transition-all flex items-center gap-2"
           >
             <Camera className="w-5 h-5" />
-            Start AR Scan
+            See in VR
           </button>
         </div>
 
