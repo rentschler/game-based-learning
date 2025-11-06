@@ -135,40 +135,36 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
           <p className="text-white/80 leading-relaxed">{aiSummary}</p>
         </div>
 
-        {/* Photos Gallery (placeholder or provided) */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <Camera className="w-5 h-5 text-white" />
-              <h3 className="text-white font-semibold">Photos</h3>
+        {/* Photos Gallery (only show if images are available) */}
+        {(() => {
+          const photosToShow = photos.length > 0
+            ? photos
+            : landmark.name === 'Nidaros Cathedral'
+            ? [nidaros1Image, nidaros01Image, nidaros712Image]
+            : landmark.name === 'Kristiansten Fortress'
+            ? [kristian2, kristian3, kristian4]
+            : landmark.name === 'Cologne Cathedral'
+            ? [cologne1, cologne2, cologne3]
+            : [];
+
+          if (photosToShow.length === 0) return null;
+
+          return (
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Camera className="w-5 h-5 text-white" />
+                  <h3 className="text-white font-semibold">Photos</h3>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                {photosToShow.map((src, idx) => (
+                  <img key={idx} src={src} alt={`${landmark.name} ${idx + 1}`} className="w-full h-28 object-cover rounded-lg border border-white/10" />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="grid grid-cols-3 gap-3">
-            {(
-              photos.length > 0
-                ? photos
-                : landmark.name === 'Nidaros Cathedral'
-                ? [nidaros1Image, nidaros01Image, nidaros712Image]
-                : landmark.name === 'Kristiansten Fortress'
-                ? [kristian2, kristian3, kristian4]
-                : landmark.name === 'Cologne Cathedral'
-                ? [cologne1, cologne2, cologne3]
-                : landmark.name === 'Colosseum'
-                ? [
-                    `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}+Photo+1`,
-                    `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}+Photo+2`,
-                    `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}+Photo+3`
-                  ]
-                : [
-                    `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}`,
-                    `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}+Photo+2`,
-                    `https://placehold.co/400x300/png?text=${encodeURIComponent(landmark.name)}+Photo+3`
-                  ]
-            ).map((src, idx) => (
-              <img key={idx} src={src} alt={`${landmark.name} ${idx + 1}`} className="w-full h-28 object-cover rounded-lg border border-white/10" />
-            ))}
-          </div>
-        </div>
+          );
+        })()}
 
         {/* Rewards & Meta */}
         <div className="grid grid-cols-2 gap-4 mb-6">
