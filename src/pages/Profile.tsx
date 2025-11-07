@@ -99,7 +99,7 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
           </div>
 
           {/* XP Display */}
-          <div className="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl p-4 border border-yellow-200 mb-4">
+          <div className="bg-gradient-to-br from-amber-200 via-yellow-100 to-orange-200 rounded-xl p-4 border border-amber-300 shadow-lg mb-4">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Zap className="w-5 h-5 text-yellow-500" />
               <span className="text-amber-800 text-sm font-medium">Experience Points</span>
