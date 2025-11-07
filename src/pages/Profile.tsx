@@ -54,20 +54,20 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
   ];
 
   return (
-    <div className="absolute inset-0 z-50 bg-gradient-to-b from-black/90 to-black/95 overflow-y-auto">
+    <div className="absolute inset-0 z-50 bg-amber-100 overflow-y-auto">
       {/* Top Bar */}
-      <div className="sticky top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black/80 to-transparent">
+  <div className="sticky top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-amber-100 to-transparent">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-white">
-            <User className="w-5 h-5" />
+          <div className="flex items-center gap-2 text-amber-900">
+            <User className="w-5 h-5 text-amber-900" />
             <span className="font-medium">Profile</span>
           </div>
           <button 
             onClick={onClose}
-            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            className="p-2 rounded-full bg-white border border-amber-200 shadow-sm hover:bg-amber-50 transition-colors"
             aria-label="Close profile"
           >
-            <X className="w-6 h-6 text-white" />
+            <X className="w-6 h-6 text-amber-800" />
           </button>
         </div>
       </div>
@@ -77,7 +77,7 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
         <div className="text-center mb-6">
           {/* Avatar */}
           <div className="relative inline-block mb-4">
-            <div className="w-24 h-24 rounded-full overflow-hidden shadow-2xl border-4 border-white/20">
+            <div className="w-24 h-24 rounded-full overflow-hidden shadow-2xl border-4 border-amber-200">
               <img 
                 src={profileImage} 
                 alt="Profile" 
@@ -90,36 +90,36 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
           </div>
 
           {/* Name */}
-          <h1 className="text-3xl font-serif text-white mb-2">Joni</h1>
+          <h1 className="text-3xl font-serif text-amber-900 mb-2">Joni</h1>
           
           {/* Level Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-full border border-purple-500/30 mb-4">
             <Star className="w-4 h-4 text-purple-400" />
-            <span className="text-white font-semibold">Level {level}</span>
+            <span className="text-amber-900 font-semibold">Level {level}</span>
           </div>
 
           {/* XP Display */}
-          <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 backdrop-blur-sm rounded-xl p-4 border border-yellow-500/30 mb-4">
+          <div className="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl p-4 border border-yellow-200 mb-4">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
-              <span className="text-white/70 text-sm font-medium">Experience Points</span>
+              <Zap className="w-5 h-5 text-yellow-500" />
+              <span className="text-amber-800 text-sm font-medium">Experience Points</span>
             </div>
-            <p className="text-3xl font-bold text-white mb-2">{score.toLocaleString()} XP</p>
+            <p className="text-3xl font-bold text-amber-900 mb-2">{score.toLocaleString()} XP</p>
             
             {/* Level Progress Bar */}
             <div className="mt-3">
-              <div className="flex items-center justify-between text-xs text-white/60 mb-1">
+              <div className="flex items-center justify-between text-xs text-amber-700 mb-1">
                 <span>Level {level}</span>
                 <span>{xpProgress}/500 XP</span>
                 <span>Level {level + 1}</span>
               </div>
-              <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-white/50 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 transition-all duration-500"
                   style={{ width: `${levelProgress}%` }}
                 />
               </div>
-              <p className="text-xs text-white/50 mt-1 text-center">
+              <p className="text-xs text-amber-700 mt-1 text-center">
                 {xpForNextLevel} XP until next level
               </p>
             </div>
@@ -127,7 +127,7 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
         </div>
 
         {/* Tabs Section: Friends, Museum, Journal, Achievements */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden mb-6">
+        <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden mb-6">
           {/* Tab Headers */}
           <div className="flex border-b border-white/10">
             {[
@@ -141,12 +141,12 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 py-4 px-2 flex flex-col items-center gap-1 transition-all ${
                   activeTab === tab.id
-                    ? 'bg-white/10 border-b-2 border-amber-400'
-                    : 'hover:bg-white/5'
+                    ? 'bg-amber-50 border-b-2 border-amber-400'
+                    : 'hover:bg-amber-50'
                 }`}
               >
-                <tab.icon className={`w-5 h-5 ${activeTab === tab.id ? 'text-amber-400' : 'text-white/60'}`} />
-                <span className={`text-xs font-medium ${activeTab === tab.id ? 'text-white' : 'text-white/60'}`}>
+                <tab.icon className={`w-5 h-5 ${activeTab === tab.id ? 'text-amber-400' : 'text-amber-700'}`} />
+                <span className={`text-xs font-medium ${activeTab === tab.id ? 'text-amber-900' : 'text-amber-700'}`}>
                   {tab.label}
                 </span>
               </button>
@@ -160,27 +160,27 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
                 {friends.map((friend) => (
                   <div
                     key={friend.id}
-                    className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all"
+                    className="flex items-center gap-4 p-4 bg-white rounded-xl border border-amber-100 hover:bg-amber-50 transition-all"
                   >
                     <div className="relative">
                       <img 
                         src={friend.image} 
                         alt={friend.name} 
-                        className="w-14 h-14 rounded-full object-cover border-2 border-white/20"
+                        className="w-14 h-14 rounded-full object-cover border-2 border-amber-200"
                       />
                       <div className="absolute -bottom-1 -right-1 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full px-2 py-0.5 border-2 border-black/90">
                         <span className="text-xs font-bold text-white">{friend.level}</span>
                       </div>
                     </div>
                     <div className="flex-1">
-                      <p className="text-white font-medium">{friend.name}</p>
+                      <p className="text-amber-900 font-medium">{friend.name}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <Star className="w-3 h-3 text-purple-400" />
-                        <span className="text-white/60 text-sm">Level {friend.level}</span>
+                        <span className="text-amber-700 text-sm">Level {friend.level}</span>
                       </div>
                     </div>
-                    <button className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all">
-                      <span className="text-white text-sm font-medium">View</span>
+                    <button className="px-4 py-2 bg-white border border-amber-100 hover:bg-amber-50 rounded-lg transition-all">
+                      <span className="text-amber-900 text-sm font-medium">View</span>
                     </button>
                   </div>
                 ))}
@@ -189,17 +189,17 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
 
             {activeTab === 'museum' && (
               <div className="text-center py-8">
-                <BookOpen className="w-12 h-12 text-white/30 mx-auto mb-3" />
-                <p className="text-white/70 mb-2">Your digital collection</p>
-                <p className="text-white/50 text-sm">View all your discovered landmarks in one place</p>
+                <BookOpen className="w-12 h-12 text-amber-400 mx-auto mb-3" />
+                <p className="text-amber-700 mb-2">Your digital collection</p>
+                <p className="text-amber-600 text-sm">View all your discovered landmarks in one place</p>
               </div>
             )}
 
             {activeTab === 'journal' && (
               <div className="text-center py-8">
-                <Book className="w-12 h-12 text-white/30 mx-auto mb-3" />
-                <p className="text-white/70 mb-2">Your exploration journal</p>
-                <p className="text-white/50 text-sm">Track your journey and discoveries</p>
+                <Book className="w-12 h-12 text-amber-400 mx-auto mb-3" />
+                <p className="text-amber-700 mb-2">Your exploration journal</p>
+                <p className="text-amber-600 text-sm">Track your journey and discoveries</p>
               </div>
             )}
 
@@ -216,23 +216,23 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
                     key={achievement.id}
                     className={`p-4 rounded-xl border transition-all ${
                       achievement.earned
-                        ? 'bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-amber-500/30'
-                        : 'bg-white/5 border-white/10 opacity-50'
+                        ? 'bg-gradient-to-br from-amber-100 to-orange-100 border-amber-200'
+                        : 'bg-white border-amber-100 opacity-80'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                         achievement.earned
                           ? 'bg-gradient-to-br from-amber-400 to-orange-500'
-                          : 'bg-white/10'
+                          : 'bg-white'
                       }`}>
-                        <Award className={`w-5 h-5 ${achievement.earned ? 'text-white' : 'text-white/30'}`} />
+                        <Award className={`w-5 h-5 ${achievement.earned ? 'text-white' : 'text-amber-400'}`} />
                       </div>
                       <div className="flex-1">
-                        <p className={`font-medium ${achievement.earned ? 'text-white' : 'text-white/50'}`}>
+                        <p className={`font-medium ${achievement.earned ? 'text-amber-900' : 'text-amber-700'}`}>
                           {achievement.title}
                         </p>
-                        <p className={`text-sm ${achievement.earned ? 'text-white/70' : 'text-white/40'}`}>
+                        <p className={`text-sm ${achievement.earned ? 'text-amber-700' : 'text-amber-500'}`}>
                           {achievement.description}
                         </p>
                       </div>
@@ -248,20 +248,20 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
         </div>
 
         {/* Discoveries Section */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-6">
+        <div className="bg-white rounded-2xl p-6 border border-amber-100 mb-6">
           <div className="flex items-center gap-2 mb-4">
             <MapPin className="w-5 h-5 text-cyan-400" />
-            <h3 className="text-white font-semibold">Discoveries</h3>
+            <h3 className="text-amber-900 font-semibold">Discoveries</h3>
           </div>
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+            <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-amber-100">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
                   <MapPin className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-white font-medium">Landmarks Explored</p>
-                  <p className="text-white/60 text-sm">{discoveredLandmarks} of {totalLandmarks} discovered</p>
+                  <p className="text-amber-900 font-medium">Landmarks Explored</p>
+                  <p className="text-amber-700 text-sm">{discoveredLandmarks} of {totalLandmarks} discovered</p>
                 </div>
               </div>
               <div className="text-right">
@@ -272,10 +272,10 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
         </div>
 
         {/* Badges Section */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-6">
+        <div className="bg-white rounded-2xl p-6 border border-amber-100 mb-6">
           <div className="flex items-center gap-2 mb-4">
             <Trophy className="w-5 h-5 text-purple-400" />
-            <h3 className="text-white font-semibold">Badges</h3>
+            <h3 className="text-amber-900 font-semibold">Badges</h3>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {badges.map((badge) => (
@@ -284,13 +284,13 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
                 className={`p-3 rounded-xl border transition-all ${
                   badge.earned
                     ? 'bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-purple-500/30'
-                    : 'bg-white/5 border-white/10 opacity-50'
+                    : 'bg-white border-amber-100 opacity-90'
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <span className="text-2xl">{badge.name.split(' ')[0]}</span>
                   <div className="flex-1">
-                    <p className={`text-sm font-medium ${badge.earned ? 'text-white' : 'text-white/50'}`}>
+                    <p className={`text-sm font-medium ${badge.earned ? 'text-white' : 'text-amber-700'}`}>
                       {badge.name.split(' ').slice(1).join(' ')}
                     </p>
                     {badge.earned && (

@@ -103,7 +103,7 @@ const WatercolorAtlasExplore = () => {
   );
 
   return (
-    <div className="h-full w-full bg-amber-50 flex flex-col relative overflow-hidden">
+    <div className="h-full w-full bg-amber-100 flex flex-col relative overflow-hidden">
       {/* background imaage (assets/ChatGPT_background.png)  */}
       <div className="absolute inset-0">
         <img src={'/src/assets/Group 5.png'} alt="Background" className="object-cover w-full h-full opacity-50"  />

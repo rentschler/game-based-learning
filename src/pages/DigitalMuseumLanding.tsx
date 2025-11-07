@@ -76,7 +76,7 @@ const DigitalMuseumLanding = ({ onOpenNation, onClose }: Props) => {
     };
   }, []);
   return (
-    <div className="absolute inset-0 z-50 bg-white overflow-auto">
+    <div className="absolute inset-0 z-50 bg-amber-100 overflow-auto">
       <div className="max-w-5xl mx-auto p-4">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-lg font-serif text-amber-900">Digital Museum</h1>

@@ -78,9 +78,9 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
   };
 
   return (
-    <div className="absolute inset-0 z-50 bg-[#FFFCEC] overflow-y-auto">
+    <div className="absolute inset-0 z-50 bg-amber-100 overflow-y-auto">
       {/* Top Bar */}
-      <div className="sticky top-0 left-0 right-0 z-10 p-4 bg-[#FFFCEC]">
+      <div className="sticky top-0 left-0 right-0 z-10 p-4 bg-amber-100">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-amber-900">
             <MapPin className="w-5 h-5" />

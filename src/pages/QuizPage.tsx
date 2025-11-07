@@ -110,7 +110,7 @@ export default function QuizPage({ onClose }: { onClose?: () => void }) {
   }, [showResults, xpAwarded, earnedXP]);
 
   return (
-    <div className="h-full w-full bg-gradient-to-b from-sky-50 to-white flex flex-col items-center p-6 relative overflow-hidden">
+    <div className="h-full w-full bg-amber-100 flex flex-col items-center p-6 relative overflow-hidden">
       {/* Confetti Animation */}
       {showConfetti && (
         <div className="absolute inset-0 pointer-events-none z-50 overflow-hidden">
