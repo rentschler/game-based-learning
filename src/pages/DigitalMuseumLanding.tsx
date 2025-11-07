@@ -123,6 +123,39 @@ const DigitalMuseumLanding = ({ onOpenNation, onClose }: Props) => {
             })}
           </div>
         </div>
+        
+        {/* Legend below the island: dynamic counts based on visible buildings (exclude 'movies') */}
+        <div className="mt-4 flex justify-center">
+          <div className="bg-white rounded-lg p-4 shadow-md border border-amber-100 w-full max-w-md">
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🌍</span>
+                <div>
+                  <div className="text-sm text-amber-700">Nations Visited:</div>
+                  <div className="text-lg font-semibold text-amber-900">
+                    {(() => {
+                      const totalNations = 195;
+                      // count visible buildings excluding 'movies' and 'colosseum'
+                      const visibleCount = BUILDINGS.reduce((acc, b) => {
+                        if (b.key === 'movies' || b.key === 'colosseum') return acc;
+                        return acc + (shown[b.key] ? 1 : 0);
+                      }, 0);
+                      return `${visibleCount}/${totalNations}`;
+                    })()}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🏛️</span>
+                <div>
+                  <div className="text-sm text-amber-700">Wonders of the World Discovered:</div>
+                  <div className="text-lg font-semibold text-amber-900">{showColosseum ? 1 : 0}/7</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
