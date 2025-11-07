@@ -70,7 +70,7 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
       'Old Town Bridge': `The "Gamle Bybro" connects the center with Bakklandet, a postcard view of colorful wooden houses. Nicknamed the Gateway to Happiness, it's a beloved symbol of Trondheim.`,
       'Rockheim Museum': `Norway's national museum of pop and rock chronicles the sounds and scenes from the 1950s onward with immersive, interactive exhibits.`,
       'Stiftsgården': `Among Scandinavia's largest wooden residences, Stiftsgården has hosted the Norwegian royal family since the late 18th century and anchors the city's ceremonial life.`,
-      'Colosseum': `The iconic amphitheater of ancient Rome, this massive structure hosted gladiatorial contests, public spectacles, and could seat over 50,000 spectators. A symbol of Roman engineering and entertainment, it stands as one of the world's most recognizable monuments.`,
+  'Colosseum': `The iconic amphitheater of ancient Rome, this massive structure hosted gladiatorial contests, public spectacles, and could seat over 50,000 spectators. A symbol of Roman engineering and entertainment, it stands as one of the world's most recognizable monuments.`,
       'Circus Maximus': `The largest stadium in ancient Rome, this massive chariot racing venue could accommodate over 150,000 spectators. For centuries, it was the center of Roman public entertainment, hosting thrilling races and grand celebrations.`,
       'Caracalla Baths': `One of the largest and most luxurious public bath complexes of the Roman Empire, these baths featured elaborate mosaics, libraries, and exercise areas. A testament to Roman engineering and social life, they served as a hub of daily activity and relaxation.`,
     };
@@ -78,20 +78,20 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-b from-black/90 to-black/95 overflow-y-auto">
+    <div className="fixed inset-0 z-50 bg-[#FFFCEC] overflow-y-auto">
       {/* Top Bar */}
-      <div className="sticky top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black/80 to-transparent">
+      <div className="sticky top-0 left-0 right-0 z-10 p-4 bg-[#FFFCEC]">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-white">
+          <div className="flex items-center gap-2 text-amber-900">
             <MapPin className="w-5 h-5" />
             <span className="font-medium">Landmark Details</span>
           </div>
           <button 
             onClick={onClose}
-            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            className="p-2 rounded-full bg-white hover:bg-amber-50 transition-colors border border-amber-100"
             aria-label="Close details"
           >
-            <X className="w-6 h-6 text-white" />
+            <X className="w-6 h-6 text-amber-900" />
           </button>
         </div>
       </div>
@@ -99,19 +99,19 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
       <div className="max-w-2xl mx-auto p-6 pt-2">
         {/* Header */}
         <div className="text-center mb-4">
-          <h1 className="text-3xl font-serif text-white mb-2">{landmark.name}</h1>
+          <h1 className="text-3xl font-serif text-amber-900 mb-2">{landmark.name}</h1>
           <div className="flex items-center justify-center gap-2">
-            <span className="px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-sm border border-amber-500/30">
+            <span className="px-3 py-1 bg-amber-100 text-amber-900 rounded-full text-sm border border-amber-200">
               {landmark.category}
             </span>
-            <span className="px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-sm border border-amber-500/30">
+            <span className="px-3 py-1 bg-amber-100 text-amber-900 rounded-full text-sm border border-amber-200">
               Est. {landmark.year}
             </span>
           </div>
         </div>
 
         {/* Image */}
-        <div className="overflow-hidden rounded-2xl border border-white/10 mb-6 shadow-xl">
+        <div className="overflow-hidden rounded-2xl border border-amber-100 mb-6 shadow-sm bg-white">
           <img
             src={
               landmark.name === 'Nidaros Cathedral'
@@ -121,13 +121,7 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
                 : landmark.name === 'Cologne Cathedral'
                 ? cologne0
                 : landmark.name === 'Colosseum'
-                ? colosseumImage
-                : landmark.name === 'Old Town Bridge'
-                ? oldBridgeImage
-                : landmark.name === 'Rockheim Museum'
-                ? rockheimImage
-                : landmark.name === 'Stiftsgården'
-                ? stiftsgardenImage
+                  ? colosseumImage
                 : `https://placehold.co/1200x700/png?text=${encodeURIComponent(landmark.name)}`
             }
             alt={`${landmark.name} photo`}
@@ -137,12 +131,12 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
         </div>
 
         {/* AI Summary */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
+        <div className="bg-white rounded-2xl p-6 mb-6 border border-amber-100 shadow-sm">
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="w-5 h-5 text-cyan-400" />
-            <h3 className="text-white font-semibold">Overview</h3>
+            <h3 className="text-amber-900 font-semibold">Overview</h3>
           </div>
-          <p className="text-white/80 leading-relaxed">{aiSummary}</p>
+          <p className="text-amber-800 leading-relaxed">{aiSummary}</p>
         </div>
 
         {/* Photos Gallery (only show if images are available) */}
@@ -166,11 +160,11 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
           if (photosToShow.length === 0) return null;
 
           return (
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
+            <div className="bg-white rounded-2xl p-6 mb-6 border border-amber-100 shadow-sm">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Camera className="w-5 h-5 text-white" />
-                  <h3 className="text-white font-semibold">Photos</h3>
+                  <h3 className="text-amber-900 font-semibold">Photos</h3>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-3">
@@ -184,19 +178,19 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
 
         {/* Rewards & Meta */}
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 backdrop-blur-sm rounded-xl p-4 border border-yellow-500/30">
+          <div className="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl p-4 border border-amber-100">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
-              <span className="text-white/70 text-sm">Reading Bonus</span>
+              <Zap className="w-5 h-5 text-yellow-500" />
+              <span className="text-amber-800 text-sm">Reading Bonus</span>
             </div>
-            <p className="text-2xl font-bold text-white">+{earnedXP} XP</p>
+            <p className="text-2xl font-bold text-amber-900">+{earnedXP} XP</p>
           </div>
-          <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl p-4 border border-purple-500/30">
+          <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl p-4 border border-purple-100">
             <div className="flex items-center gap-2 mb-2">
               <Trophy className="w-5 h-5 text-purple-400" />
-              <span className="text-white/70 text-sm">Badge</span>
+              <span className="text-amber-800 text-sm">Badge</span>
             </div>
-            <p className="text-lg font-semibold text-white">{badge}</p>
+            <p className="text-lg font-semibold text-amber-900">{badge}</p>
           </div>
         </div>
 
@@ -209,20 +203,20 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
             Back to Map
           </button>
           <button 
-            className="px-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-medium border border-white/20 hover:bg-white/20 transition-all flex items-center gap-2"
+            className="px-4 bg-amber-50 text-amber-900 rounded-xl font-medium border border-amber-100 hover:bg-amber-100 transition-all flex items-center gap-2"
           >
             <Camera className="w-5 h-5" />
-            Start AR Scan
+            See in VR
           </button>
         </div>
 
         {/* Trivia */}
-        <div className="mt-6 p-4 bg-cyan-500/10 backdrop-blur-sm rounded-xl border border-cyan-500/20">
-          <h4 className="text-cyan-400 font-semibold mb-2 flex items-center gap-2">
-            <Star className="w-4 h-4" />
+        <div className="mt-6 p-4 bg-amber-50 rounded-xl border border-amber-100">
+          <h4 className="text-amber-900 font-semibold mb-2 flex items-center gap-2">
+            <Star className="w-4 h-4 text-amber-700" />
             Did you know?
           </h4>
-          <p className="text-white/70 text-sm">
+          <p className="text-amber-800 text-sm">
             This landmark often appears in local postcards and travel journals. Explore nearby sites to continue your discovery streak!
           </p>
         </div>
