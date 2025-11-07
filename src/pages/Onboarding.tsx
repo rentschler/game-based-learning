@@ -5,6 +5,7 @@ import { MapPin, Camera, Sparkles, CheckCircle, Star, Trophy } from 'lucide-reac
 const logoImage = new URL('../assets/oboarding/logo.png', import.meta.url).href;
 const oldBridgeScan = new URL('../assets/old_bridge_scan.jpg', import.meta.url).href;
 const trodnheimImage = new URL('../assets/trodnheim.jpg', import.meta.url).href;
+const backgroundImage = new URL('../assets/ChatGPT_background.png', import.meta.url).href;
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -145,19 +146,21 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
 
   return (
     <div 
-      className="absolute inset-0 z-[100] cursor-pointer"
+      className="absolute inset-0 z-[100] cursor-pointer bg-amber-100"
       onClick={handleTap}
-      style={{
-        background: `
-          radial-gradient(ellipse at 20% 30%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
-          radial-gradient(ellipse at 80% 70%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
-          linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fef3c7 100%)
-        `
-      }}
     >
+      {/* Background image */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        <img
+          src={backgroundImage}
+          alt="Watercolor world background"
+          className="w-full h-full object-cover blur-md scale-105"
+        />
+      </div>
+
       {/* Parchment texture overlay */}
       <div 
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-30 pointer-events-none"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.3' /%3E%3C/svg%3E")`,
           backgroundSize: '200px 200px'
