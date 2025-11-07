@@ -134,7 +134,7 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
         {filtered.length === 0 ? (
           <div className="text-center text-amber-700 py-20">No items match your search.</div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {filtered.map(item => (
               <button 
                 key={item.id}
@@ -145,16 +145,16 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
                   <img 
                     src={getThumbnail(item.name)}
                     alt={`${item.name} thumbnail`} 
-                    className="w-full h-32 object-cover group-hover:scale-105 transition-transform"
+                    className={`w-full h-32 object-cover group-hover:scale-105 transition-transform ${item.discovered ? '' : 'saturate-0 brightness-90'}`}
                   />
                 </div>
-                <div className="flex items-start justify-between gap-2">
-                  <div>
+                <div className="flex flex-wrap items-start gap-2">
+                  <div className="flex-1 min-w-0">
                     <h3 className="text-amber-900 font-medium leading-tight">{item.name}</h3>
                     <p className="text-amber-700 text-xs">{item.category} • Est. {item.year}</p>
                   </div>
                   {item.discovered && (
-                    <span className="inline-flex items-center gap-1 text-emerald-700 text-xs bg-emerald-100 rounded-full px-2 py-0.5">
+                    <span className="inline-flex items-center gap-1 text-emerald-700 text-xs bg-emerald-100 rounded-full px-2 py-0.5 flex-shrink-0">
                       <Trophy className="w-3 h-3" /> Unlocked
                     </span>
                   )}

@@ -47,8 +47,8 @@ const NationMuseum = ({ nation, onBack, onOpenCity }: Props) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-amber-100 from-amber-50 to-white overflow-auto">
-      <div className="max-w-5xl mx-auto p-4">
+    <div className="absolute inset-0 z-50 bg-gradient-to-b from-amber-200 via-amber-100 to-white overflow-auto">
+      <div className="max-w-3xl mx-auto p-4">
         <div className="flex items-center gap-3 mb-4">
           <button onClick={onBack} className="p-2 rounded-full bg-white border border-amber-200 shadow-sm">
             <ArrowLeft className="w-4 h-4 text-amber-800" />
@@ -59,7 +59,7 @@ const NationMuseum = ({ nation, onBack, onOpenCity }: Props) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {cities.map((c) => (
             <button
               key={c}
