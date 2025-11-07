@@ -81,7 +81,7 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-b from-amber-50 to-white overflow-hidden">
+    <div className="absolute inset-0 z-50 bg-gradient-to-b from-amber-50 to-white overflow-hidden">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-gradient-to-b from-white to-amber-50/80 backdrop-blur supports-[backdrop-filter]:bg-white/70 border-b border-amber-200">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">

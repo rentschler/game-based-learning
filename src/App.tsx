@@ -2,18 +2,19 @@ import { useState } from 'react';
 import './App.css'
 import WatercolorAtlasExplore from './pages/Explore'
 import Onboarding from './pages/Onboarding'
+import MobileViewport from './components/MobileViewport'
 
 function App() {
   const [showOnboarding, setShowOnboarding] = useState(true);
 
   return (
-    <div className="App w-screen h-screen m-0 p-0">
+    <MobileViewport>
       {showOnboarding ? (
         <Onboarding onComplete={() => setShowOnboarding(false)} />
       ) : (
         <WatercolorAtlasExplore />
       )}
-    </div>
+    </MobileViewport>
   )
 }
 

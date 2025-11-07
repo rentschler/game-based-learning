@@ -67,7 +67,7 @@ const CologneExplore = ({ onNavigateToRome }: CologneExploreProps) => {
   if (showQuiz) return <QuizPage onClose={() => setShowQuiz(false)} />;
 
   return (
-    <div className="h-screen w-full bg-amber-50 flex flex-col relative overflow-hidden">
+    <div className="h-full w-full bg-amber-50 flex flex-col relative overflow-hidden">
       {/* Cologne map background */}
       <div className="absolute inset-0">
         <img src={'/src/assets/cologne_map.png'} alt="Cologne Map" className="object-cover w-full h-full opacity-50" />

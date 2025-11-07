@@ -131,7 +131,7 @@ const DiscoveryScanner: React.FC<DiscoveryScannerProps> = ({
   if (!landmark) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black">
+    <div className="absolute inset-0 z-50 bg-black">
       {/* AR Camera View Simulation */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
         {/* Camera feed simulation with subtle animation or photo while scanning */}

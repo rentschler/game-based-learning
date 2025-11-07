@@ -54,7 +54,7 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
   ];
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-b from-black/90 to-black/95 overflow-y-auto">
+    <div className="absolute inset-0 z-50 bg-gradient-to-b from-black/90 to-black/95 overflow-y-auto">
       {/* Top Bar */}
       <div className="sticky top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black/80 to-transparent">
         <div className="flex items-center justify-between">

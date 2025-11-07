@@ -145,7 +145,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
 
   return (
     <div 
-      className="fixed inset-0 z-[100] cursor-pointer"
+      className="absolute inset-0 z-[100] cursor-pointer"
       onClick={handleTap}
       style={{
         background: `
