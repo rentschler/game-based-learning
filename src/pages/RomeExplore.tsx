@@ -141,7 +141,7 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
   if (showQuiz) return <QuizPage onClose={() => setShowQuiz(false)} />;
 
   return (
-    <div className="h-screen w-full bg-amber-50 flex flex-col relative overflow-hidden">
+    <div className="h-screen w-full bg-amber-100 flex flex-col relative overflow-hidden">
       {/* Rome map background (switches between modern and historic based on selectedYear) */}
       <div className="absolute inset-0">
         {/* choose historic map around 100 AD if selected close to 100, otherwise modern */}

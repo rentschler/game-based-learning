@@ -71,10 +71,10 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-b from-amber-50 to-white overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-amber-100">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-gradient-to-b from-white to-amber-50/80 backdrop-blur supports-[backdrop-filter]:bg-white/70 border-b border-amber-200">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="sticky top-0 z-10 bg-amber-100">
+        <div className="bg-amber-100 max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Book className="w-6 h-6 text-amber-800" />
             <div>
@@ -94,7 +94,7 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
                 <button
                   key={t.key}
                   onClick={() => setActiveTab(t.key as any)}
-                  className={`px-4 py-2 text-sm ${activeTab === t.key ? 'bg-amber-100 text-amber-900' : 'text-amber-700'}`}
+                  className={`px-4 py-2 text-sm ${activeTab === t.key ? 'bg-amber-50 text-amber-900' : 'text-amber-700'}`}
                 >
                   {t.label}
                 </button>
