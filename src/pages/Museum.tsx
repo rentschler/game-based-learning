@@ -150,7 +150,7 @@ const Museum = ({ cityName = 'Your City', items, onClose }: MuseumProps) => {
                 </div>
                 <div className="flex flex-wrap items-start gap-2">
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-amber-900 font-medium leading-tight">{item.name}</h3>
+                    <h3 className="text-amber-900 font-medium leading-tight break-words whitespace-pre-wrap">{item.name}</h3>
                     <p className="text-amber-700 text-xs">{item.category} • Est. {item.year}</p>
                   </div>
                   {item.discovered && (
