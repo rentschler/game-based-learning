@@ -1,6 +1,8 @@
 # Game Based Learning App "GeoScout"
 
-![GeoScout Logo](src/assets/oboarding/logo.png)
+<p align="center" style="max-width:70%; margin: 0 auto;">
+  <img src="src/assets/oboarding/logo.png" alt="GeoScout Logo" style="max-width:50%;">
+</p>
 
 *Exercise on Gamification Application as part of the course "IT3021 Game+" at NTNU*
 
