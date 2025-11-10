@@ -1,25 +1,47 @@
-import { useEffect, useState } from 'react';
-import { X, MapPin, Sparkles, Trophy, Star, Zap, Camera } from 'lucide-react';
-import { addXP } from '../utils/score';
+import { useEffect, useState } from "react";
+import { X, MapPin, Sparkles, Trophy, Star, Zap, Camera } from "lucide-react";
+import { addXP } from "../utils/score";
 
 // Resolve local assets via Vite's import.meta.url so TypeScript doesn't need custom declarations for .jpg
-const nidarosImage = new URL('../assets/nidaros_cathedral.jpg', import.meta.url).href;
-const nidaros1Image = new URL('../assets/nidaros_1.jpg', import.meta.url).href;
-const nidaros01Image = new URL('../assets/Nidaros_Cathedral_01.jpg', import.meta.url).href;
-const nidaros712Image = new URL('../assets/Nidarosdomen_7.1.2.jpg', import.meta.url).href;
-const kristianMain = new URL('../assets/Kristiansten_Festning_sunrise_red_canon.jpg', import.meta.url).href;
-const kristian2 = new URL('../assets/fortress2.jpg', import.meta.url).href;
-const kristian3 = new URL('../assets/fortress3.jpg', import.meta.url).href;
-const kristian4 = new URL('../assets/fortress4.jpg', import.meta.url).href;
-const cologne0 = new URL('../assets/cologne_0.jpg', import.meta.url).href;
-const cologne1 = new URL('../assets/cologne_1.png', import.meta.url).href;
-const cologne2 = new URL('../assets/cologne_2.jpg', import.meta.url).href;
-const cologne3 = new URL('../assets/cologne_3.jpg', import.meta.url).href;
-const colosseumImage = new URL('../assets/colosseum_replica.jpg', import.meta.url).href;
+const nidarosImage = new URL("../assets/nidaros_cathedral.jpg", import.meta.url)
+  .href;
+const nidaros1Image = new URL("../assets/nidaros_1.jpg", import.meta.url).href;
+const nidaros01Image = new URL(
+  "../assets/Nidaros_Cathedral_01.jpg",
+  import.meta.url
+).href;
+const nidaros712Image = new URL(
+  "../assets/Nidarosdomen_7.1.2.jpg",
+  import.meta.url
+).href;
+const kristianMain = new URL(
+  "../assets/Kristiansten_Festning_sunrise_red_canon.jpg",
+  import.meta.url
+).href;
+const kristian2 = new URL("../assets/fortress2.jpg", import.meta.url).href;
+const kristian3 = new URL("../assets/fortress3.jpg", import.meta.url).href;
+const kristian4 = new URL("../assets/fortress4.jpg", import.meta.url).href;
+const cologne0 = new URL("../assets/cologne_0.jpg", import.meta.url).href;
+const cologne1 = new URL("../assets/cologne_1.png", import.meta.url).href;
+const cologne2 = new URL("../assets/cologne_2.jpg", import.meta.url).href;
+const cologne3 = new URL("../assets/cologne_3.jpg", import.meta.url).href;
+const colosseumImage = new URL(
+  "../assets/colosseum_replica.jpg",
+  import.meta.url
+).href;
 // Trondheim landmarks
-const oldBridgeImage = new URL('../assets/Trondheim/Gamble-Bybro.jpg', import.meta.url).href;
-const rockheimImage = new URL('../assets/Trondheim/rockheim.jpg', import.meta.url).href;
-const stiftsgardenImage = new URL('../assets/Trondheim/Stiftsgården.jpg', import.meta.url).href;
+const oldBridgeImage = new URL(
+  "../assets/Trondheim/Gamble-Bybro.jpg",
+  import.meta.url
+).href;
+const rockheimImage = new URL(
+  "../assets/Trondheim/rockheim.jpg",
+  import.meta.url
+).href;
+const stiftsgardenImage = new URL(
+  "../assets/Trondheim/Stiftsgården.jpg",
+  import.meta.url
+).href;
 
 interface LandmarkBasic {
   id: number;
@@ -35,10 +57,14 @@ interface LandmarkDetailProps {
   photos?: string[]; // optional list of photo URLs
 }
 
-const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps) => {
-  const [aiSummary, setAiSummary] = useState('');
+const LandmarkDetail = ({
+  landmark,
+  onClose,
+  photos = [],
+}: LandmarkDetailProps) => {
+  const [aiSummary, setAiSummary] = useState("");
   const [earnedXP, setEarnedXP] = useState(0);
-  const [badge, setBadge] = useState('');
+  const [badge, setBadge] = useState("");
 
   useEffect(() => {
     // Reading Bonus: Fixed 34 XP for reading landmark details
@@ -47,34 +73,39 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
     setBadge(getBadgeForCategory(landmark.category));
     const summary = generateAISummary(landmark);
     setAiSummary(summary);
-    
+
     // Award XP when landmark details are viewed
     addXP(xp);
   }, [landmark]);
 
   const getBadgeForCategory = (category: string): string => {
     const badges: { [key: string]: string } = {
-      'Historic': '🏛️ History Scholar',
-      'Military': '⚔️ Fortress Explorer',
-      'Architecture': '🏗️ Design Enthusiast',
-      'Culture': '🎨 Culture Curator',
-      'Royal': '👑 Royal Heritage'
+      Historic: "🏛️ History Scholar",
+      Military: "⚔️ Fortress Explorer",
+      Architecture: "🏗️ Design Enthusiast",
+      Culture: "🎨 Culture Curator",
+      Royal: "👑 Royal Heritage",
     };
-    return badges[category] || '⭐ Explorer';
+    return badges[category] || "⭐ Explorer";
   };
 
   const generateAISummary = (lm: LandmarkBasic): string => {
     const summaries: { [key: string]: string } = {
-      'Nidaros Cathedral': `Built over the burial site of St. Olav, this Gothic masterpiece became Norway's coronation church. Its ornate west façade and centuries of craftsmanship make it a living chronicle of Scandinavian history.`,
-      'Kristiansten Fortress': `Raised after the great fire of 1681, the fortress secured Trondheim and withstood the 1718 siege. Today it serves as a vantage point and cultural venue overlooking the city.`,
-      'Old Town Bridge': `The "Gamle Bybro" connects the center with Bakklandet, a postcard view of colorful wooden houses. Nicknamed the Gateway to Happiness, it's a beloved symbol of Trondheim.`,
-      'Rockheim Museum': `Norway's national museum of pop and rock chronicles the sounds and scenes from the 1950s onward with immersive, interactive exhibits.`,
-      'Stiftsgården': `Among Scandinavia's largest wooden residences, Stiftsgården has hosted the Norwegian royal family since the late 18th century and anchors the city's ceremonial life.`,
-  'Colosseum': `The iconic amphitheater of ancient Rome, this massive structure hosted gladiatorial contests, public spectacles, and could seat over 50,000 spectators. A symbol of Roman engineering and entertainment, it stands as one of the world's most recognizable monuments.`,
-      'Circus Maximus': `The largest stadium in ancient Rome, this massive chariot racing venue could accommodate over 150,000 spectators. For centuries, it was the center of Roman public entertainment, hosting thrilling races and grand celebrations.`,
-      'Caracalla Baths': `One of the largest and most luxurious public bath complexes of the Roman Empire, these baths featured elaborate mosaics, libraries, and exercise areas. A testament to Roman engineering and social life, they served as a hub of daily activity and relaxation.`,
+      "Nidaros Cathedral": `Built over the burial site of St. Olav, this Gothic masterpiece became Norway's coronation church. Its ornate west façade and centuries of craftsmanship make it a living chronicle of Scandinavian history.`,
+      "Kristiansten Fortress": `Raised after the great fire of 1681, the fortress secured Trondheim and withstood the 1718 siege. Today it serves as a vantage point and cultural venue overlooking the city.`,
+      "Old Town Bridge": `The "Gamle Bybro" connects the center with Bakklandet, a postcard view of colorful wooden houses. Nicknamed the Gateway to Happiness, it's a beloved symbol of Trondheim.`,
+      "Rockheim Museum": `Norway's national museum of pop and rock chronicles the sounds and scenes from the 1950s onward with immersive, interactive exhibits.`,
+      Stiftsgården: `Among Scandinavia's largest wooden residences, Stiftsgården has hosted the Norwegian royal family since the late 18th century and anchors the city's ceremonial life.`,
+      Colosseum: `The iconic amphitheater of ancient Rome, this massive structure hosted gladiatorial contests, public spectacles, and could seat over 50,000 spectators. A symbol of Roman engineering and entertainment, it stands as one of the world's most recognizable monuments.`,
+      "Circus Maximus": `The largest stadium in ancient Rome, this massive chariot racing venue could accommodate over 150,000 spectators. For centuries, it was the center of Roman public entertainment, hosting thrilling races and grand celebrations.`,
+      "Caracalla Baths": `One of the largest and most luxurious public bath complexes of the Roman Empire, these baths featured elaborate mosaics, libraries, and exercise areas. A testament to Roman engineering and social life, they served as a hub of daily activity and relaxation.`,
     };
-    return summaries[lm.name] || `A notable ${lm.category.toLowerCase()} landmark established in ${lm.year}. Its stories and design offer a window into the city's evolving identity.`;
+    return (
+      summaries[lm.name] ||
+      `A notable ${lm.category.toLowerCase()} landmark established in ${
+        lm.year
+      }. Its stories and design offer a window into the city's evolving identity.`
+    );
   };
 
   return (
@@ -86,7 +117,7 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
             <MapPin className="w-5 h-5" />
             <span className="font-medium">Landmark Details</span>
           </div>
-          <button 
+          <button
             onClick={onClose}
             className="p-2 rounded-full bg-white hover:bg-amber-50 transition-colors border border-amber-100"
             aria-label="Close details"
@@ -99,7 +130,9 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
       <div className="max-w-2xl mx-auto p-6 pt-2">
         {/* Header */}
         <div className="text-center mb-4">
-          <h1 className="text-3xl font-serif text-amber-900 mb-2">{landmark.name}</h1>
+          <h1 className="text-3xl font-serif text-amber-900 mb-2">
+            {landmark.name}
+          </h1>
           <div className="flex items-center justify-center gap-2">
             <span className="px-3 py-1 bg-amber-100 text-amber-900 rounded-full text-sm border border-amber-200">
               {landmark.category}
@@ -114,15 +147,17 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
         <div className="overflow-hidden rounded-2xl border border-amber-100 mb-6 shadow-sm bg-white">
           <img
             src={
-              landmark.name === 'Nidaros Cathedral'
+              landmark.name === "Nidaros Cathedral"
                 ? nidarosImage // use the image located at `src/assets/nidaros_cathedral.jpg`
-                : landmark.name === 'Kristiansten Fortress'
+                : landmark.name === "Kristiansten Fortress"
                 ? kristianMain
-                : landmark.name === 'Cologne Cathedral'
+                : landmark.name === "Cologne Cathedral"
                 ? cologne0
-                : landmark.name === 'Colosseum'
-                  ? colosseumImage
-                : `https://placehold.co/1200x700/png?text=${encodeURIComponent(landmark.name)}`
+                : landmark.name === "Colosseum"
+                ? colosseumImage
+                : `https://placehold.co/1200x700/png?text=${encodeURIComponent(
+                    landmark.name
+                  )}`
             }
             alt={`${landmark.name} photo`}
             className="w-full h-auto object-cover"
@@ -141,21 +176,22 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
 
         {/* Photos Gallery (only show if images are available) */}
         {(() => {
-          const photosToShow = photos.length > 0
-            ? photos
-            : landmark.name === 'Nidaros Cathedral'
-            ? [nidaros1Image, nidaros01Image, nidaros712Image]
-            : landmark.name === 'Kristiansten Fortress'
-            ? [kristian2, kristian3, kristian4]
-            : landmark.name === 'Cologne Cathedral'
-            ? [cologne1, cologne2, cologne3]
-            : landmark.name === 'Old Town Bridge'
-            ? [oldBridgeImage]
-            : landmark.name === 'Rockheim Museum'
-            ? [rockheimImage]
-            : landmark.name === 'Stiftsgården'
-            ? [stiftsgardenImage]
-            : [];
+          const photosToShow =
+            photos.length > 0
+              ? photos
+              : landmark.name === "Nidaros Cathedral"
+              ? [nidaros1Image, nidaros01Image, nidaros712Image]
+              : landmark.name === "Kristiansten Fortress"
+              ? [kristian2, kristian3, kristian4]
+              : landmark.name === "Cologne Cathedral"
+              ? [cologne1, cologne2, cologne3]
+              : landmark.name === "Old Town Bridge"
+              ? [oldBridgeImage]
+              : landmark.name === "Rockheim Museum"
+              ? [rockheimImage]
+              : landmark.name === "Stiftsgården"
+              ? [stiftsgardenImage]
+              : [];
 
           if (photosToShow.length === 0) return null;
 
@@ -169,7 +205,12 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
               </div>
               <div className="grid grid-cols-3 gap-3">
                 {photosToShow.map((src, idx) => (
-                  <img key={idx} src={src} alt={`${landmark.name} ${idx + 1}`} className="w-full h-28 object-cover rounded-lg border border-white/10" />
+                  <img
+                    key={idx}
+                    src={src}
+                    alt={`${landmark.name} ${idx + 1}`}
+                    className="w-full h-28 object-cover rounded-lg border border-white/10"
+                  />
                 ))}
               </div>
             </div>
@@ -196,15 +237,13 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
 
         {/* Actions */}
         <div className="flex gap-3">
-          <button 
+          <button
             onClick={onClose}
             className="flex-1 bg-gradient-to-r from-amber-600 to-orange-500 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
           >
             Back to Map
           </button>
-          <button 
-            className="px-4 bg-amber-50 text-amber-900 rounded-xl font-medium border border-amber-100 hover:bg-amber-100 transition-all flex items-center gap-2"
-          >
+          <button className="px-4 bg-amber-50 text-amber-900 rounded-xl font-medium border border-amber-100 hover:bg-amber-100 transition-all flex items-center gap-2">
             <Camera className="w-5 h-5" />
             See in VR
           </button>
@@ -217,7 +256,7 @@ const LandmarkDetail = ({ landmark, onClose, photos = [] }: LandmarkDetailProps)
             Did you know?
           </h4>
           <p className="text-amber-800 text-sm">
-            This landmark often appears in local postcards and travel journals. Explore nearby sites to continue your discovery streak!
+          Nidaros, the former name of the city of Trondheim, Norway. The name Nidaros was given to the city because it is located at the mouth of the River Nid. 
           </p>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { getScore } from '../utils/score';
 
 // Profile images
 const profileImage = new URL('../assets/profile/A close-up of a peng.png', import.meta.url).href;
+const penguin1Image = new URL('../assets/profile/penguin1.png', import.meta.url).href;
 const steveImage = new URL('../assets/profile/steve.png', import.meta.url).href;
 const juliusImage = new URL('../assets/profile/Julius.png', import.meta.url).href;
 
@@ -12,6 +13,12 @@ interface ProfileProps {
   discoveredLandmarks?: number;
   totalLandmarks?: number;
 }
+
+// Friends list
+export const friends = [
+  { id: 1, name: 'Steve', level: 9, image: steveImage },
+  { id: 2, name: 'Julius', level: 2, image: juliusImage },
+];
 
 type TabType = 'friends' | 'museum' | 'journal' | 'achievements';
 
@@ -47,11 +54,7 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
   const xpProgress = score % 500;
   const levelProgress = (xpProgress / 500) * 100;
 
-  // Friends list
-  const friends = [
-    { id: 1, name: 'Steve', level: 9, image: steveImage },
-    { id: 2, name: 'Julius', level: 2, image: juliusImage },
-  ];
+  
 
   return (
     <div className="absolute inset-0 z-50 bg-amber-100 overflow-y-auto">
@@ -79,7 +82,7 @@ const Profile = ({ onClose, discoveredLandmarks = 0, totalLandmarks = 0 }: Profi
           <div className="relative inline-block mb-4">
             <div className="w-24 h-24 rounded-full overflow-hidden shadow-2xl border-4 border-amber-200">
               <img 
-                src={profileImage} 
+                src={penguin1Image} 
                 alt="Profile" 
                 className="w-full h-full object-cover"
               />

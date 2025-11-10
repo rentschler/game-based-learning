@@ -4,6 +4,7 @@ import QuizPage from './QuizPage';
 import DiscoveryScanner from './DiscoveryScanner';
 import LandmarkDetail from './LandmarkDetail';
 import Museum from './Museum';
+import Leaderboard from './Leaderboard';
 
 interface Landmark {
   id: number;
@@ -123,6 +124,7 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
 
   // Gladiator popup state - appears when pressing 'U'
   const [showGladiatorPopup, setShowGladiatorPopup] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -203,7 +205,11 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
             >
               <Brain className="w-5 h-5 text-amber-800" />
             </button>
-            <button className="p-2 rounded-full bg-white shadow-sm">
+            <button
+              className="p-2 rounded-full bg-white shadow-sm"
+              onClick={() => setShowLeaderboard(true)}
+              aria-label="Open Leaderboard"
+            >
               <Trophy className="w-5 h-5 text-amber-800" />
             </button>
             <button className="p-2 rounded-full bg-white shadow-sm">
@@ -524,6 +530,10 @@ const RomeExplore = ({ onNavigateToTrondheim }: RomeExploreProps) => {
           items={landmarks}
           onClose={() => setShowMuseum(false)}
         />
+      )}
+
+      {showLeaderboard && (
+        <Leaderboard onClose={() => setShowLeaderboard(false)} />
       )}
     </div>
   );

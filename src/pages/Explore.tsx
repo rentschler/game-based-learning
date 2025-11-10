@@ -10,6 +10,7 @@ import DiscoveryScanner from './DiscoveryScanner';
 import LandmarkDetail from './LandmarkDetail';
 import Museum from './Museum';
 import Profile from './Profile';
+import Leaderboard from './Leaderboard';
 
 interface Landmark {
   id: number;
@@ -37,6 +38,7 @@ const WatercolorAtlasExplore = () => {
   const [landmarkToShow, setLandmarkToShow] = useState<Landmark | null>(null);
   const [showMuseum, setShowMuseum] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
   // Landmark data - discovered vs undiscovered
@@ -45,7 +47,7 @@ const WatercolorAtlasExplore = () => {
   { id: 1, name: 'Nidaros Cathedral', x: 10, y: 50, discovered: true, category: 'Historic', year: '1070', metersAway: 100 },
   { id: 2, name: 'Kristiansten Fortress', x: 89, y: 45, discovered: true, category: 'Military', year: '1681', metersAway: 300 },
     { id: 3, name: 'Old Town Bridge', x: 62, y: 14, discovered: false, category: 'Architecture', year: '1861', metersAway: 50 },
-    { id: 4, name: 'Rockheim Museum', x: 30, y: 60, discovered: false, category: 'Culture', year: '2010', metersAway: 125 },
+    { id: 4, name: 'Rockheim Museum', x: 45, y: 65, discovered: false, category: 'Culture', year: '2010', metersAway: 125 },
     { id: 5, name: 'Stiftsgården', x: 7, y: 39, discovered: false, category: 'Royal', year: '1778', metersAway: 500 },
   ]);
 
@@ -150,7 +152,11 @@ const WatercolorAtlasExplore = () => {
             >
               <Brain className="w-5 h-5 text-amber-800" />
             </button>
-            <button className="p-2 rounded-full bg-white shadow-sm">
+            <button
+              className="p-2 rounded-full bg-white shadow-sm"
+              onClick={() => setShowLeaderboard(true)}
+              aria-label="Open Leaderboard"
+            >
               <Trophy className="w-5 h-5 text-amber-800" />
             </button>
             <button 
@@ -379,6 +385,11 @@ const WatercolorAtlasExplore = () => {
           discoveredLandmarks={discoveredCount}
           totalLandmarks={totalCount}
         />
+      )}
+
+      {/* Leaderboard Modal */}
+      {showLeaderboard && (
+        <Leaderboard onClose={() => setShowLeaderboard(false)} />
       )}
     </div>
   );

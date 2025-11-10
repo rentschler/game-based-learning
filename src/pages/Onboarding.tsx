@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { MapPin, Camera, Sparkles, CheckCircle, Star, Trophy } from 'lucide-react';
+import { MapPin, Sparkles, CheckCircle, Star, Trophy } from 'lucide-react';
 
 // Assets
 const logoImage = new URL('../assets/oboarding/logo.png', import.meta.url).href;
-const oldBridgeScan = new URL('../assets/old_bridge_scan.jpg', import.meta.url).href;
 const trodnheimImage = new URL('../assets/trodnheim.jpg', import.meta.url).href;
 const backgroundImage = new URL('../assets/ChatGPT_background.png', import.meta.url).href;
 
@@ -18,20 +17,18 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentScene, setCurrentScene] = useState<Scene>(0);
   const [isSkipped, setIsSkipped] = useState(false);
-  const [tapCount, setTapCount] = useState(0);
   const [scanningState, setScanningState] = useState<ScanningState>('initializing');
   const [scanProgress, setScanProgress] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showWaterSplash, setShowWaterSplash] = useState(false);
-  const sceneTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const scanIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const sceneTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scanIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Handle tap/click
   const handleTap = () => {
     if (!isPlaying) {
       // First tap: start playing
       setIsPlaying(true);
-      setTapCount(1);
     } else {
       // Second tap: skip
       setIsSkipped(true);
