@@ -19,8 +19,10 @@ const Shop = ({ onClose, onRemoveAdsClick, onCoinsUpdate }: ShopProps) => {
   ];
 
   const arScenes = [
-    { id: 'notredame', name: 'Notre-Dame Cathedral Construction', image: '/src/assets/monetization/notredame_package_crop.png' },
-    { id: 'viking', name: 'Viking Settlement Life', image: '/src/assets/monetization/viking_package_crop.png' },
+    { id: 'colosseum', name: 'Colosseum Gladiator Battle (80 AD)', image: '/src/assets/monetization/gladiator_battle.png', coins: 400 },
+    { id: 'notredame', name: 'Notre-Dame Cathedral Construction (1163)', image: '/src/assets/monetization/notredame_package_crop.png', coins: 250 },
+    { id: 'viking', name: 'Viking Settlement Life (900 AD)', image: '/src/assets/monetization/viking_package_crop.png', coins: 250 },
+
   ];
 
   const handleCoinPurchase = (packageId: string, coins: number) => {
@@ -148,7 +150,10 @@ const Shop = ({ onClose, onRemoveAdsClick, onCoinsUpdate }: ShopProps) => {
                     )}
                   </div>
                   <div className="p-4">
-                    <h4 className="text-lg font-semibold text-amber-900 mb-2 h-15">{scene.name}</h4>
+                    <h4 className="text-lg font-semibold text-amber-900 mb-n1 h-15">{scene.name}</h4>
+                    <div className="text-right">
+                      <p className="text-lg font-semibold text-amber-900 mb-2">{scene.coins} coins</p>
+              </div>  
                     <button
                       onClick={() => handleARScenePurchase(scene.id)}
                       disabled={isPurchased}
