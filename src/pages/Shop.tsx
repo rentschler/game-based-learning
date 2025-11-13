@@ -19,8 +19,8 @@ const Shop = ({ onClose, onRemoveAdsClick, onCoinsUpdate }: ShopProps) => {
   ];
 
   const arScenes = [
-    { id: 'notredame', name: 'Notre-Dame Cathedral Construction', image: '/src/assets/monetization/notredame_package.png' },
-    { id: 'viking', name: 'Viking Settlement Life', image: '/src/assets/monetization/placeholder.png' },
+    { id: 'notredame', name: 'Notre-Dame Cathedral Construction', image: '/src/assets/monetization/notredame_package_crop.png' },
+    { id: 'viking', name: 'Viking Settlement Life', image: '/src/assets/monetization/viking_package_crop.png' },
   ];
 
   const handleCoinPurchase = (packageId: string, coins: number) => {
@@ -55,10 +55,10 @@ const Shop = ({ onClose, onRemoveAdsClick, onCoinsUpdate }: ShopProps) => {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto p-6 pt-4">
+      <div className="max-w-2xl mx-auto p-3 pt-4">
         {/* Remove Ads Section - Prominent at Top */}
         <div className="mb-8">
-          <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-500/30 shadow-lg">
+          <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl p-3 border-2 border-purple-500/30 shadow-lg">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <div className="flex items-center gap-2 mb-2">
@@ -94,8 +94,10 @@ const Shop = ({ onClose, onRemoveAdsClick, onCoinsUpdate }: ShopProps) => {
                 <div className="p-4">
                   <div className="text-4xl mb-3 text-center">{pkg.emoji}</div>
                   <h4 className="text-lg font-semibold text-amber-900 mb-1 text-center">{pkg.name}</h4>
-                  {pkg.bonus && (
+                  {pkg.bonus ? (
                     <p className="text-xs text-green-600 font-medium text-center mb-2">{pkg.bonus}</p>
+                  ):(
+                    <p className="text-xs text-amber-700 font-medium text-center mb-2 invisible">No bonus</p>
                   )}
                   <div className="text-center mb-4">
                     <p className="text-2xl font-bold text-amber-900">{pkg.coins}</p>
@@ -126,11 +128,11 @@ const Shop = ({ onClose, onRemoveAdsClick, onCoinsUpdate }: ShopProps) => {
                   className="flex-shrink-0 w-64 bg-white rounded-xl border border-amber-200 shadow-md overflow-hidden hover:shadow-lg transition-all"
                 >
                   <div className="relative">
-                    <div className="w-64 h-40 bg-amber-100 flex items-center justify-center">
+                    <div className="w-64 h-50 bg-amber-100 flex items-end justify-center overflow-hidden">
                       <img
                         src={scene.image}
                         alt={scene.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover object-bottom"
                         onError={(e) => {
                           // Fallback if image doesn't exist
                           const target = e.target as HTMLImageElement;
@@ -146,7 +148,7 @@ const Shop = ({ onClose, onRemoveAdsClick, onCoinsUpdate }: ShopProps) => {
                     )}
                   </div>
                   <div className="p-4">
-                    <h4 className="text-lg font-semibold text-amber-900 mb-2">{scene.name}</h4>
+                    <h4 className="text-lg font-semibold text-amber-900 mb-2 h-15">{scene.name}</h4>
                     <button
                       onClick={() => handleARScenePurchase(scene.id)}
                       disabled={isPurchased}
