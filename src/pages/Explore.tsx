@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { MapPin, Compass, Book, Trophy, User, Camera, Brain } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { MapPin, Compass, Book, Trophy, User, Camera, Brain, Star, CircleDollarSign } from 'lucide-react';
 import CologneExplore from './CologneExplore';
 import RomeExplore from './RomeExplore';
 import DigitalMuseumLanding from './DigitalMuseumLanding.tsx';
@@ -11,6 +11,10 @@ import LandmarkDetail from './LandmarkDetail';
 import Museum from './Museum';
 import Profile from './Profile';
 import Leaderboard from './Leaderboard';
+import Shop from './Shop';
+import RemoveAdsModal from '../components/RemoveAdsModal';
+import { getScore } from '../utils/score';
+import { getCoins } from '../utils/coins';
 
 interface Landmark {
   id: number;
@@ -40,6 +44,30 @@ const WatercolorAtlasExplore = () => {
   const [showQuiz, setShowQuiz] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showShop, setShowShop] = useState(false);
+  const [showRemoveAdsModal, setShowRemoveAdsModal] = useState(false);
+  const [score, setScore] = useState(1069);
+  const [level, setLevel] = useState(1);
+  const [coins, setCoins] = useState(0);
+  const [isAdFree, setIsAdFree] = useState(false);
+
+  useEffect(() => {
+    const updateStats = () => {
+      const currentScore = getScore();
+      const currentCoins = getCoins();
+      const adFreeStatus = localStorage.getItem('gbl_ad_free') === 'true';
+      setScore(currentScore);
+      setCoins(currentCoins);
+      setIsAdFree(adFreeStatus);
+      // Calculate level: every 500 XP = 1 level (starting from level 1)
+      setLevel(Math.floor(currentScore / 500) + 1);
+    };
+    
+    updateStats();
+    // Refresh stats every second to keep them updated
+    const interval = setInterval(updateStats, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Landmark data - discovered vs undiscovered
   const [landmarks, setLandmarks] = useState([
@@ -132,7 +160,22 @@ const WatercolorAtlasExplore = () => {
               <Compass className="w-6 h-6 text-amber-800" />
             </button>
             <div>
-              <h1 className="text-lg font-serif text-amber-900">Trondheim</h1>
+              <div className="flex items-center gap-2 mb-1">
+                <h1 className="text-lg font-serif text-amber-900">Trondheim</h1>
+                {/* Level Badge */}
+                <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-full border border-purple-500/30">
+                  <Star className="w-3 h-3 text-purple-400" />
+                  <span className="text-xs text-amber-900 font-semibold">{level}</span>
+                </div>
+              </div>
+              {/* Coin Counter - Clickable */}
+              <button
+                onClick={() => setShowShop(true)}
+                className="flex items-center gap-1 mb-1 hover:opacity-80 transition-opacity"
+              >
+                <CircleDollarSign className="w-3 h-3 text-yellow-600" />
+                <span className="text-xs font-medium text-amber-800">{coins} coins</span>
+              </button>
               <p className="text-xs text-amber-700">{discoveredCount}/{totalCount} landmarks discovered</p>
             </div>
           </div>
@@ -390,6 +433,50 @@ const WatercolorAtlasExplore = () => {
       {/* Leaderboard Modal */}
       {showLeaderboard && (
         <Leaderboard onClose={() => setShowLeaderboard(false)} />
+      )}
+
+      {/* Shop Modal */}
+      {showShop && (
+        <Shop 
+          onClose={() => setShowShop(false)}
+          onRemoveAdsClick={() => setShowRemoveAdsModal(true)}
+          onCoinsUpdate={() => {
+            const currentCoins = getCoins();
+            setCoins(currentCoins);
+          }}
+        />
+      )}
+
+      {/* Remove Ads Modal */}
+      {showRemoveAdsModal && (
+        <RemoveAdsModal 
+          onClose={() => {
+            setShowRemoveAdsModal(false);
+            // Update ad-free status and coins
+            const currentCoins = getCoins();
+            setCoins(currentCoins);
+            setIsAdFree(localStorage.getItem('gbl_ad_free') === 'true');
+          }}
+        />
+      )}
+
+      {/* Fitcraft Banner - Only show if not ad-free */}
+      {!isAdFree && (
+        <div className="absolute bottom-4 left-4 right-4 z-30">
+          <div className="bg-white rounded-xl shadow-xl border-2 border-amber-200 overflow-hidden">
+            <img 
+              src="/src/assets/monetization/Fitcraft_banner.png" 
+              alt="Fitcraft" 
+              className="w-full h-auto object-cover"
+              onError={(e) => {
+                // Fallback if image doesn't exist
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                target.parentElement!.innerHTML = '<div class="p-4 text-center text-amber-800">Fitcraft Banner</div>';
+              }}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
