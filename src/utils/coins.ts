@@ -3,7 +3,7 @@
  */
 
 const COINS_STORAGE_KEY = 'gbl_user_coins';
-const INITIAL_COINS = 0;
+const INITIAL_COINS = 50;
 
 /**
  * Get the current user coins from localStorage
